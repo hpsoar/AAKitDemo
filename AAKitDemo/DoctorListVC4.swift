@@ -28,15 +28,16 @@ class DoctorListVC4 : NITableVC {
             
         }
         else {
-            if doctorListOptions.page == 0 {
-                resetDataSource()
-            }
-            
             let doctors = result.model as! [AnyObject!]
-            if (doctors.count > 0) {
-                mutableTableViewModel.addObjectsFromArray(DoctorListItem.itemsWithDoctors(doctors)  as [AnyObject])
+            
+            let items = DoctorListItem.itemsWithDoctors(doctors)  as [AnyObject]
+            
+            if doctorListOptions.page == 0 {
+                modelViewUpdater.reloadWithObjects(items)
             }
-            tableView.reloadData()
+            else {
+                modelViewUpdater.addObjectsFromArray(items)
+            }
             
             if (doctors.count == doctorListOptions.pageSize) {
                 self.doctorListOptions.page += 1;

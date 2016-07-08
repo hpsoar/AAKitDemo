@@ -35,14 +35,16 @@ didFinishLoadWithType:(ModelRefreshType)type
     if (result.error) {
         
     } else {
-        if (self.doctorListOptions.page == 0) {
-            [self resetDataSource];
-        }
         NSArray *doctors = result.model;
         if (doctors.count > 0) {
-            [self.mutableTableViewModel addObjectsFromArray:[DoctorListItem itemsWithDoctors:doctors]];
+            NSArray *items = [DoctorListItem itemsWithDoctors:doctors];
+            if (self.doctorListOptions.page == 0) {
+                [self.modelViewUpdater reloadWithObjects:items];
+            }
+            else {
+                [self.modelViewUpdater addObjectsFromArray:items];
+            }
         }
-        [self.tableView reloadData];
         
         if (doctors.count == self.doctorListOptions.pageSize) {
             self.doctorListOptions.page += 1;

@@ -287,12 +287,12 @@ class AAStackNode: AAUINode {
     func calculateChildrenSizesIfNeeded(stackSizeRange: AASizeRange) {
         var usedStackSize: CGFloat = 0.0
         
-        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, filter: { (child) -> (Bool) in
-            return !child.flexShrink
+        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, reject: { (child) -> (Bool) in
+            return child.flexShrink
         })
         
-        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, filter: { (child) -> (Bool) in
-            return child.flexShrink
+        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, reject: { (child) -> (Bool) in
+            return !child.flexShrink
         })
         
         flexChildrenAlongStackDimension(usedStackSize, stackSizeRange: stackSizeRange)
@@ -349,23 +349,21 @@ class AAStackNode: AAUINode {
         }
     }
     
-    func layoutChildren(stackSizeRange:AASizeRange, usedStackSize: CGFloat, filter: (AAStackNodeChild) -> (Bool)) -> CGFloat {
+    func layoutChildren(stackSizeRange:AASizeRange, usedStackSize: CGFloat, reject: (AAStackNodeChild) -> (Bool)) -> CGFloat {
         var usedStackSize = usedStackSize
         
         for child in children {
-            usedStackSize += child.spacingBefore
-            
-            if !child.flexShrink {
+            if !reject(child) {
+                usedStackSize += child.spacingBefore
                 usedStackSize += layoutChild(child, stackSizeRange: stackSizeRange, usedStackSize: usedStackSize)
+                usedStackSize += spacing + child.spacingAfter
             }
-            
-            usedStackSize += spacing + child.spacingAfter
         }
         return usedStackSize
     }
     
     func layoutChild(child: AAStackNodeChild, stackSizeRange: AASizeRange, usedStackSize: CGFloat) -> CGFloat {
-        let sizeRange = AASizeRange(max: stackSizeRange.max.shrinkStackDimension(direction, value: usedStackSize))
+        let sizeRange = AASizeRange(max: stackSizeRange.max.shrinkStackDimension(direction, value: -usedStackSize))
         child.node.calculateSizeIfNeeded(sizeRange)
         return child.node.size.stackDimension(direction)
     }
