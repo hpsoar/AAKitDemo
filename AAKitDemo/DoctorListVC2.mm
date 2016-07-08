@@ -50,7 +50,7 @@
         }
         NSArray *doctors = result.model;
         if (doctors.count > 0) {
-            [self.modelViewUpdater addObjectsFromArray:doctors];
+            //[self.modelViewUpdater addObjectsFromArray:doctors];
         }
 
         if (doctors.count == self.doctorListOptions.pageSize) {

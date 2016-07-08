@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		122398931D2F81E100E030E4 /* AAModelChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122398921D2F81E100E030E4 /* AAModelChangeSet.swift */; };
 		127E34851D2F2DE5000EB373 /* AAComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 127E34151D2F2DE5000EB373 /* AAComponent.mm */; };
 		127E34861D2F2DE5000EB373 /* AAComponentExt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 127E34171D2F2DE5000EB373 /* AAComponentExt.mm */; };
 		127E34871D2F2DE5000EB373 /* AALabelComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 127E34191D2F2DE5000EB373 /* AALabelComponent.mm */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		1223988E1D2F780500E030E4 /* AAKitDemo-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AAKitDemo-Prefix.h"; sourceTree = SOURCE_ROOT; };
+		122398921D2F81E100E030E4 /* AAModelChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAModelChangeSet.swift; sourceTree = "<group>"; };
 		127E34141D2F2DE5000EB373 /* AAComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponent.h; sourceTree = "<group>"; };
 		127E34151D2F2DE5000EB373 /* AAComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAComponent.mm; sourceTree = "<group>"; };
 		127E34161D2F2DE5000EB373 /* AAComponentExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponentExt.h; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				127E346A1D2F2DE5000EB373 /* AATableVC.m */,
 				127E346B1D2F2DE5000EB373 /* APIKit.h */,
 				127E346C1D2F2DE5000EB373 /* APIKit.m */,
+				122398921D2F81E100E030E4 /* AAModelChangeSet.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				12C38E0D1D2F281300D26266 /* DoctorInfoComponent.mm in Sources */,
 				127E34A01D2F2DE5000EB373 /* UIView_Block.swift in Sources */,
 				127E34871D2F2DE5000EB373 /* AALabelComponent.mm in Sources */,
+				122398931D2F81E100E030E4 /* AAModelChangeSet.swift in Sources */,
 				12C38E0B1D2F281300D26266 /* AANode.swift in Sources */,
 				127E34B81D2F2DE5000EB373 /* NIModelUpdater.m in Sources */,
 				12C38E151D2F281300D26266 /* TestCollectionVC.m in Sources */,
