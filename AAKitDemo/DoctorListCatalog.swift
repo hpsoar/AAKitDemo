@@ -92,13 +92,15 @@ class DoctorListItem: AATableObject {
     var layout: DoctorListLayout!
 
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
-        //let doctorListItem = item as! DoctorListItem
-        let doctor = (item as! DoctorListItem).doctor
-        layout = DoctorListLayout(doctor: doctor)
+        if layout == nil {
+            let doctor = (item as! DoctorListItem).doctor
         
-        let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
-        layout.layoutIfNeeded(contrainedSize)
-        cellHeight = layout.rootNode.size.height
+            layout = DoctorListLayout(doctor: doctor)
+        
+            let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
+            layout.layoutIfNeeded(contrainedSize)
+            cellHeight = layout.rootNode.size.height
+        }
     }
 }
 
@@ -140,5 +142,9 @@ class DoctorListItemCell : AATableCell {
         item.layout.btnNode.setup(btn)
         
         return true
+    }
+    
+    override func prepareForReuse() {
+        
     }
 }
