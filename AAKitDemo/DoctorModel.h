@@ -12,6 +12,7 @@
 
 @interface DoctorModel : NSObject
 
+@property(nonatomic, copy) Class cls;
 @property (nonatomic) NSInteger Id;
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, copy) NSString *title;

@@ -105,24 +105,10 @@ class DoctorListItem: AATableObject {
 }
 
 class DoctorListItemCell : AATableCell {
-    let nameLabel = NIAttributedLabel()
-    let titleLabel = NIAttributedLabel()
-    let clinicLabel = NIAttributedLabel()
-    let hospitalLabel = NIAttributedLabel()
-    let goodAtLabel = NIAttributedLabel()
-    let btn = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.aa_addSubviews([
-            nameLabel,
-            titleLabel,
-            clinicLabel,
-            hospitalLabel,
-            goodAtLabel,
-            btn
-            ])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -133,18 +119,12 @@ class DoctorListItemCell : AATableCell {
         super.shouldUpdateCellWithObject(object)
         
         let item = object as! DoctorListItem
-        
-        item.layout.nameNode.setup(nameLabel)
-        item.layout.titleNode.setup(titleLabel)
-        item.layout.clinicNode.setup(clinicLabel)
-        item.layout.hospitalNode.setup(hospitalLabel)
-        item.layout.goodAtNode.setup(goodAtLabel)
-        item.layout.btnNode.setup(btn)
+        item.layout.rootNode.mountOnView(contentView)
         
         return true
     }
     
     override func prepareForReuse() {
-        
+        contentView.aa_removeAllSubviews()
     }
 }
