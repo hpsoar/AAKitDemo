@@ -14,62 +14,46 @@ class DoctorListLayout {
     var clinicNode = AALabelNode()
     var hospitalNode = AALabelNode()
     var goodAtNode = AALabelNode()
-    var rootNode: AAStackNode
+    var figureNode = AAStaticNode(size: CGSizeMake(45, 45))
+    var rootNode: AAStackNode!
     
-    init() {
-        nameNode.style.textColor = UIColor.redColor()
-        nameNode.style.fontSize = 16
+    convenience init() {
+        self.init(doctor: nil)
+    }
+    
+    init(doctor: DoctorModel?) {
+        nameNode.config(fontSize: 16, hexColor: 0xff0000, text: doctor?.name)
         
-        titleNode.style.textColor = UIColor.grayColor()
-        titleNode.style.fontSize = 12
+        titleNode.config(fontSize: 12, hexColor: 0x666666, text: doctor?.title)
         
-        clinicNode.style.fontSize = 12
-        clinicNode.style.hexColor = 0x439322
+        clinicNode.config(fontSize: 12, hexColor: 0x439322, text: doctor?.clinic)
         
-        hospitalNode.style.fontSize = 12
-        hospitalNode.style.textColor = UIColor.grayColor()
+        hospitalNode.config(fontSize: 12, hexColor: 0x666666, text: doctor?.hospital)
         
-        goodAtNode.style.fontSize = 12
-        goodAtNode.style.textColor = UIColor.grayColor()
-        goodAtNode.style.maximumNumberOfLines = 2
+        goodAtNode.config(fontSize: 12, hexColor: 0x666666, text: doctor?.goodAt)
+            .maximumNumberOfLines(2)
         
-        rootNode = AAStackNode()
-            .direction(.Vertical)
-            .spacing(5)
-            .alignItems(.Start)
-            .children([
-            AAStackNodeChild()
-                .node(AAInsetNode()
-                    .insets(UIEdgeInsetsMake(10, 10, 10, 10))
-                    .child(AAStackNode()
-                        .direction(.Vertical)
-                        .spacing(5)
-                        .alignItems(.Start)
-                        .children([
-                            AAStackNodeChild()
-                                .node(AAStackNode()
-                                .alignItems(.End)
-                                .spacing(5)
-                                .direction(.Horizontal)
-                                .children([
-                                    AAStackNodeChild().node(nameNode),
-                                    AAStackNodeChild().node(titleNode),
-                                ])
-                            ),
-                            AAStackNodeChild()
-                                .node(AAStackNode()
-                                .alignItems(.End)
-                                .spacing(5)
-                                .direction(.Horizontal)
-                                .children([
-                                    AAStackNodeChild().node(clinicNode),
-                                    AAStackNodeChild().node(hospitalNode)
-                                    ])
-                                ),
-                            AAStackNodeChild().node(goodAtNode)
-                        ])
-                    )
-                    )
+        rootNode = AAVerticalStackNode().config(spacing: 5, alignItems: .Start).children([
+            AAHorizontalStackNode().children([
+                figureNode.insetNode(UIEdgeInsetsMake(10, 10, 0, 20)).stackChild(),
+                
+                AAVerticalStackNode().config(spacing: 5, alignItems: .Start).children([
+                    AAHorizontalStackNode().config(spacing: 5, alignItems: .End).children([
+                        self.nameNode.stackChild(),
+                        self.titleNode.stackChild(),
+                        ]).stackChild(),
+                    
+                    AAHorizontalStackNode().config(spacing: 5, alignItems: .End).children([
+                        self.clinicNode.stackChild(),
+                        self.hospitalNode.stackChild(),
+                        ]).stackChild(),
+                    
+                    goodAtNode.stackChild(),
+                    
+                    ]).stackChild()
+                
+                ]).insetNode(UIEdgeInsetsMake(10, 10, 10, 10)).stackChild(),
+                // TODO: add line
             ])
     }
     
@@ -98,16 +82,12 @@ class DoctorListItem: AATableObject {
     
     
 /// MARK - layout
-    let layout = DoctorListLayout()
+    var layout: DoctorListLayout!
 
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
         //let doctorListItem = item as! DoctorListItem
         let doctor = (item as! DoctorListItem).doctor
-        layout.nameNode.text = doctor.name
-        layout.titleNode.text = doctor.title
-        layout.clinicNode.text = doctor.clinic
-        layout.hospitalNode.text = doctor.hospital
-        layout.goodAtNode.text = doctor.goodAt
+        layout = DoctorListLayout(doctor: doctor)
         
         let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
         layout.layoutIfNeeded(contrainedSize)

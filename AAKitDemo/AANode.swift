@@ -189,6 +189,12 @@ class AAStackNodeChild {
     var flexShrink = false
     var alignSelf: AAStackNodeChildAlignment = .Auto
     
+    class func newWithConfig(block: (AAStackNodeChild) -> Void) -> AAStackNodeChild {
+        let o = AAStackNodeChild()
+        block(o)
+        return o
+    }
+    
     func node(node: AAUINode) -> Self {
         self.node = node
         return self
@@ -228,6 +234,15 @@ class AAStackNode: AAUINode {
     var alignItems: AAStackNodeAlignment = .End
     var children = [AAStackNodeChild]()
     
+    func config(block: (AAStackNode) -> Void) -> Self {
+        block(self)
+        return self
+    }
+    
+    func config(spacing spacing: CGFloat, alignItems: AAStackNodeAlignment) -> Self {
+        return self.spacing(spacing).alignItems(alignItems)
+    }
+    
     func direction(direction: AAStackNodeDirection) -> Self {
         self.direction = direction
         return self
@@ -253,11 +268,17 @@ class AAStackNode: AAUINode {
         return self
     }
     
+    func append(node: AAUINode) -> AAStackNodeChild {
+        let child = AAStackNodeChild().node(node)
+        self.children.append(child)
+        return child
+    }
     
     /// MARK: - calculate layout
     
     override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
         let stackSizeRange = AASizeRange(max: self.sizeRange.max.aa_min(constrainedSize.max))
+        
         calculateChildrenSizesIfNeeded(stackSizeRange)
         
         size = CGSize.sizeWithStackCrossDimension(direction, stack: calculateStackDimension(), cross: calculateCrossDimension())
@@ -266,15 +287,87 @@ class AAStackNode: AAUINode {
     func calculateChildrenSizesIfNeeded(stackSizeRange: AASizeRange) {
         var usedStackSize: CGFloat = 0.0
         
-        for child in children {
-            usedStackSize += child.spacingBefore
-            let sizeRange = AASizeRange(max: stackSizeRange.max.shrinkStackDimension(direction, value: usedStackSize))
-            child.node.calculateSizeIfNeeded(sizeRange)
-            usedStackSize += child.node.size.stackDimension(direction) + spacing + child.spacingAfter
+        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, filter: { (child) -> (Bool) in
+            return !child.flexShrink
+        })
+        
+        usedStackSize = layoutChildren(stackSizeRange, usedStackSize: usedStackSize, filter: { (child) -> (Bool) in
+            return child.flexShrink
+        })
+        
+        flexChildrenAlongStackDimension(usedStackSize, stackSizeRange: stackSizeRange)
+    }
+    
+    func flexChildrenAlongStackDimension(usedStackSize: CGFloat, stackSizeRange: AASizeRange) {
+        let violation = computeViolation(direction, stackSizeRange: stackSizeRange, usedStackSize: usedStackSize)
+        
+        let kViolationEpsilon: CGFloat = 0.1;
+        guard abs(violation) > kViolationEpsilon else {
+            return
         }
         
-        // if there's no enough place, need to shrink children with flexShrink = YES
-        // if there's extra space, need to expand children with flexGrow = YES
+        let flexChildren = self.flexChildren(violation)
+        
+        guard flexChildren.count > 0 else {
+            return
+        }
+        
+        let violationPerChild = violation / CGFloat(flexChildren.count)
+        let remainViolation = violation - violationPerChild * CGFloat(flexChildren.count)
+        
+        var isFirstFlex = true
+        for child in flexChildren {
+            let shrink = isFirstFlex ? (violationPerChild + remainViolation) : violationPerChild
+            child.node.size.shrinkStackDimension(direction, value: shrink)
+            isFirstFlex = false
+        }
+    }
+    
+    func flexChildren(violation: CGFloat) -> [AAStackNodeChild] {
+        return children.filter { (child) -> Bool in
+            if violation > 0 && child.flexGrow {
+                return true
+            }
+            if violation < 0 && child.flexShrink {
+                return true
+            }
+            return false
+        }
+    }
+    
+    func computeViolation(direction: AAStackNodeDirection, stackSizeRange: AASizeRange, usedStackSize: CGFloat) -> CGFloat {
+        let minStackDimension = stackSizeRange.min.stackDimension(direction)
+        let maxStackDimension = stackSizeRange.max.stackDimension(direction)
+        if (usedStackSize < minStackDimension) {
+            return minStackDimension - usedStackSize
+        }
+        else if (usedStackSize > maxStackDimension) {
+            return maxStackDimension - usedStackSize
+        }
+        else {
+            return 0.0
+        }
+    }
+    
+    func layoutChildren(stackSizeRange:AASizeRange, usedStackSize: CGFloat, filter: (AAStackNodeChild) -> (Bool)) -> CGFloat {
+        var usedStackSize = usedStackSize
+        
+        for child in children {
+            usedStackSize += child.spacingBefore
+            
+            if !child.flexShrink {
+                usedStackSize += layoutChild(child, stackSizeRange: stackSizeRange, usedStackSize: usedStackSize)
+            }
+            
+            usedStackSize += spacing + child.spacingAfter
+        }
+        return usedStackSize
+    }
+    
+    func layoutChild(child: AAStackNodeChild, stackSizeRange: AASizeRange, usedStackSize: CGFloat) -> CGFloat {
+        let sizeRange = AASizeRange(max: stackSizeRange.max.shrinkStackDimension(direction, value: usedStackSize))
+        child.node.calculateSizeIfNeeded(sizeRange)
+        return child.node.size.stackDimension(direction)
     }
     
     override func calculateFrameIfNeeded() {
@@ -341,13 +434,38 @@ class AAStackNode: AAUINode {
     }
 }
 
+class AAHorizontalStackNode : AAStackNode {
+    override init() {
+        super.init()
+        direction = .Horizontal
+    }
+}
+
+class AAVerticalStackNode : AAStackNode {
+    override init() {
+        super.init()
+        direction = .Vertical
+    }
+}
+
+
 /// MARK: - static node, simply modify AAStackNode
 
 class AAStaticNode : AAStackNode {
+    init(size: CGSize) {
+        self.staticSize = size
+        super.init()
+    }
+    
     var staticSize: CGSize = CGSizeZero {
         didSet {
             sizeRange = AASizeRange(min: staticSize, max: staticSize)
         }
+    }
+    
+    func staticSize(staticSize: CGSize) -> Self {
+        self.staticSize = staticSize
+        return self
     }
     
     override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
@@ -361,7 +479,12 @@ class AAStaticNode : AAStackNode {
 
 class AAInsetNode: AAUINode {
     var child : AAUINode?
-    var insets = UIEdgeInsetsZero        
+    var insets = UIEdgeInsetsZero
+        
+    init(insets: UIEdgeInsets) {
+        self.insets = insets
+        super.init()
+    }
     
     func insets(insets: UIEdgeInsets) -> Self {
         self.insets = insets
@@ -392,11 +515,32 @@ class AAInsetNode: AAUINode {
     }
 }
 
+extension AAUINode {
+    func stackChild() -> AAStackNodeChild {
+        return AAStackNodeChild().node(self)
+    }
+    
+    func insetNode(insets: UIEdgeInsets) -> AAInsetNode {
+        return AAInsetNode(insets: insets).child(self)
+    }
+}
+
 /// MARK: - label node attributes
 
 class AALabelAttributes {
+    var text: String? = nil
+    var attributedText: NSAttributedString? {
+        get {
+            return _attributedText != nil ? _attributedText : buildAttributedString(text)
+        }
+        set {
+            _attributedText = newValue
+        }
+    }
+    private var _attributedText: NSAttributedString? = nil
+    
     var fontSize: CGFloat = 0.0
-    var font: UIFont {
+    var font: UIFont! {
         get {
             return _font != nil ? _font! : UIFont.systemFontOfSize(fontSize)
         }
@@ -418,7 +562,7 @@ class AALabelAttributes {
     private var _textColor: UIColor?
     
     var lineBreakMode = NSLineBreakMode.ByTruncatingTail
-    var maximumNumberOfLines: UInt = 0
+    var maximumNumberOfLines: Int = 0
     
     var alignment = NSTextAlignment.Left
     var firstLineHeadIndent: CGFloat = 0.0
@@ -453,41 +597,123 @@ class AALabelAttributes {
         
         return ps;
     }
-}
-
-/// MARK: - label node works for NIAttributedLabel only due to the size calculator
-
-class AALabelNode: AAUINode {
-    var text: String? = nil
-    var attributedText: NSAttributedString? {
-        get {
-            return _attributedText != nil ? _attributedText : buildAttributedString(text)
-        }
-        set {
-            _attributedText = newValue
-        }
-    }
-    private var _attributedText: NSAttributedString? = nil
-    
-    var style = AALabelAttributes()
-    
-    override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
-        let maxSize = self.sizeRange.max.aa_min(constrainedSize.max)
-        
-        if attributedText != nil {
-            size = NISizeOfAttributedStringConstrainedToSize(attributedText, maxSize, Int(style.maximumNumberOfLines))
-        }
-        else {
-            size = CGSizeZero
-        }
-    }
     
     func buildAttributedString(text: String?) -> NSAttributedString? {
         guard text != nil else {
             return nil
         }
         
-        return NSAttributedString(string: text!, attributes: style.stringAttributes())
+        return NSAttributedString(string: text!, attributes: stringAttributes())
+    }
+}
+
+extension AALabelAttributes {
+    func text(text: String?) -> Self {
+        self.text = text
+        return self
+    }
+    
+    func attributedText(attributedText: NSAttributedString?) -> Self {
+        self.attributedText = attributedText
+        return self
+    }
+    
+    func font(font: UIFont?) -> Self {
+        self.font = font
+        return self
+    }
+    
+    func fontSize(fontSize: CGFloat) -> Self {
+        self.fontSize = fontSize
+        return self
+    }
+    
+    func hexColor(hexColor: NSInteger) -> Self {
+        self.hexColor = hexColor
+        return self
+    }
+    
+    func textColor(textColor: UIColor?) -> Self {
+        self.textColor = textColor
+        return self
+    }
+    
+    func lineBreakMode(lineBreakMode: NSLineBreakMode) -> Self {
+        self.lineBreakMode = lineBreakMode
+        return self
+    }
+    
+    func maximumNumberOfLines(maximumNumberOfLines: Int) -> Self {
+        self.maximumNumberOfLines = maximumNumberOfLines
+        return self
+    }
+    
+    func alignment(alignment: NSTextAlignment) -> Self {
+        self.alignment = alignment
+        return self
+    }
+    
+    func firstLineHeadIndent(firstLineHeadIndent: CGFloat) -> Self {
+        self.firstLineHeadIndent = firstLineHeadIndent
+        return self
+    }
+    
+    func headIndent(headIndent: CGFloat) -> Self {
+        self.headIndent = headIndent
+        return self
+    }
+    
+    func tailIndent(tailIndent: CGFloat) -> Self {
+        self.tailIndent = tailIndent
+        return self
+    }
+    
+    func lineHeightMultiple(text: CGFloat) -> Self {
+        self.lineHeightMultiple = lineHeightMultiple
+        return self
+    }
+    
+    func maximumLineHeight(maximumLineHeight: CGFloat) -> Self {
+        self.maximumLineHeight = maximumLineHeight
+        return self
+    }
+    
+    func minimumLineHeight(minimumLineHeight: CGFloat) -> Self {
+        self.minimumLineHeight = minimumLineHeight
+        return self
+    }
+    
+    func lineSpacing(lineSpacing: CGFloat) -> Self {
+        self.lineSpacing = lineSpacing
+        return self
+    }
+    
+    func paragraphSpacing(paragraphSpacing: CGFloat) -> Self {
+        self.paragraphSpacing = paragraphSpacing
+        return self
+    }
+    
+    func paragraphSpacingBefore(paragraphSpacingBefore: CGFloat) -> Self {
+        self.paragraphSpacingBefore = paragraphSpacingBefore
+        return self
+    }
+}
+
+/// MARK: - label node works for NIAttributedLabel only due to the size calculator
+
+class AALabelNode: AAUINode {
+    
+    var config = AALabelAttributes()
+    
+    override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
+        let maxSize = self.sizeRange.max.aa_min(constrainedSize.max)
+        
+        if config.attributedText != nil {
+            size = NISizeOfAttributedStringConstrainedToSize(config.attributedText, maxSize, Int(config.maximumNumberOfLines))
+        }
+        else {
+            size = CGSizeZero
+        }
     }
     
     override func setup(view: UIView) {
@@ -497,10 +723,17 @@ class AALabelNode: AAUINode {
         // to use
         let label = view as! UILabel
         
-        label.attributedText = attributedText
+        label.attributedText = config.attributedText
         
-        label.lineBreakMode = style.lineBreakMode
-        label.numberOfLines = Int(style.maximumNumberOfLines)
+        label.lineBreakMode = config.lineBreakMode
+        label.numberOfLines = Int(config.maximumNumberOfLines)
+    }
+}
+
+extension AALabelNode {
+    func config(fontSize fontSize: CGFloat, hexColor: NSInteger, text: String?) -> AALabelAttributes {
+        self.config.fontSize(fontSize).hexColor(hexColor).text(text)
+        return self.config
     }
 }
 
@@ -514,8 +747,8 @@ class AAUILabelNode : AALabelNode {
         
         let maxSize = self.sizeRange.max.aa_min(constrainedSize.max)
         
-        Sizer.sizeLabel.numberOfLines = Int(style.maximumNumberOfLines)
-        Sizer.sizeLabel.attributedText = attributedText
+        Sizer.sizeLabel.numberOfLines = Int(config.maximumNumberOfLines)
+        Sizer.sizeLabel.attributedText = config.attributedText
         size = Sizer.sizeLabel.sizeThatFits(maxSize)
     }
 }

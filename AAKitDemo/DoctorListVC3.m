@@ -8,6 +8,7 @@
 
 #import "DoctorListVC3.h"
 #import "DoctorModel.h"
+#import "AAKitDemo-Swift.h"
 
 @interface DoctorListVC3 ()
 @property(nonatomic, strong) DoctorListOptions *doctorListOptions;
@@ -35,12 +36,13 @@ didFinishLoadWithType:(ModelRefreshType)type
         
     } else {
         if (self.doctorListOptions.page == 0) {
-            [self.modelViewUpdater removeSectionAtIndex:0];
+            [self resetDataSource];
         }
         NSArray *doctors = result.model;
         if (doctors.count > 0) {
-            [self.modelViewUpdater addObjectsFromArray:doctors];
+            [self.mutableTableViewModel addObjectsFromArray:[DoctorListItem itemsWithDoctors:doctors]];
         }
+        [self.tableView reloadData];
         
         if (doctors.count == self.doctorListOptions.pageSize) {
             self.doctorListOptions.page += 1;
