@@ -23,3 +23,5 @@ xcuserdata/
 .DS_Store
 appledoc
 Carthage/Build
+Pods
+Podfile.lock
