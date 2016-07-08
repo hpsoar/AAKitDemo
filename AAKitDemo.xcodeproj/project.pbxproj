@@ -69,7 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		127E33F41D2F2D3B000EB373 /* AAKitDemo-Prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AAKitDemo-Prefix.h"; sourceTree = "<group>"; };
+		1223988E1D2F780500E030E4 /* AAKitDemo-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AAKitDemo-Prefix.h"; sourceTree = SOURCE_ROOT; };
 		127E34141D2F2DE5000EB373 /* AAComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponent.h; sourceTree = "<group>"; };
 		127E34151D2F2DE5000EB373 /* AAComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAComponent.mm; sourceTree = "<group>"; };
 		127E34161D2F2DE5000EB373 /* AAComponentExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponentExt.h; sourceTree = "<group>"; };
@@ -310,6 +310,7 @@
 		12C38DC41D2F256900D26266 /* AAKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1223988E1D2F780500E030E4 /* AAKitDemo-Prefix.h */,
 				12C38DF71D2F281300D26266 /* AANode.swift */,
 				12C38DF81D2F281300D26266 /* AsyncDisplayKitDemo.swift */,
 				12C38DF91D2F281300D26266 /* DoctorInfoComponent.h */,
@@ -335,7 +336,6 @@
 				12C38DCC1D2F256900D26266 /* Assets.xcassets */,
 				12C38DCE1D2F256900D26266 /* LaunchScreen.storyboard */,
 				12C38DD11D2F256900D26266 /* Info.plist */,
-				127E33F41D2F2D3B000EB373 /* AAKitDemo-Prefix.h */,
 			);
 			path = AAKitDemo;
 			sourceTree = "<group>";

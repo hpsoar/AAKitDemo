@@ -11,7 +11,7 @@
 #import "DoctorListVC.h"
 #import "TestCollectionVC.h"
 #import "DoctorListVC2.h"
-#import "ComponentDemo-Swift.h"
+#import "AAKitDemo-Swift.h"
 
 @interface ViewController ()
 
