@@ -41,7 +41,7 @@ class DoctorListLayout {
                 AAVerticalStackNode().config(spacing: 5, alignItems: .Start).children([
                     AAHorizontalStackNode().config(spacing: 5, alignItems: .End).children([
                         self.nameNode.stackChild(),
-                        self.titleNode.stackChild().flexShrink(true),
+                        self.titleNode.stackChild().flexShrink(true).flexGrow(true),
                         self.btnNode.stackChild(),
                         ]).stackChild(),
                     

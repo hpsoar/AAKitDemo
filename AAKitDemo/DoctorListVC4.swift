@@ -20,9 +20,7 @@ class DoctorListVC4 : NITableVC {
         
         refreshController.enableHeaderRefresh()
         
-        modelRefresher.refresh(.Top)
-        
-        
+        modelRefresher.refresh(.Top)                
     }
     
     override func refresher(refresher: AAModelRefresher!, didFinishLoadWithType type: ModelRefreshType, result: AAModelResult!) {
@@ -38,7 +36,7 @@ class DoctorListVC4 : NITableVC {
                 modelViewUpdater.reloadWithObjects(items)
             }
             else {
-                modelViewUpdater.addObjectsFromArray(items)
+                modelViewUpdater.appendObjects(items)
             }
             
             if (doctors.count == doctorListOptions.pageSize) {

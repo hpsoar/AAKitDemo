@@ -234,6 +234,10 @@ class AAStackNode: AAUINode {
     var alignItems: AAStackNodeAlignment = .End
     var children = [AAStackNodeChild]()
     
+    /// if there are flexGrow children, the maximum stack dimension will be filled up
+    /// eg. [a flex grow label] push a button right align in the stack
+    var fillStackOnGrow = true
+    
     func config(block: (AAStackNode) -> Void) -> Self {
         block(self)
         return self
@@ -336,8 +340,12 @@ class AAStackNode: AAUINode {
     }
     
     func computeViolation(direction: AAStackNodeDirection, stackSizeRange: AASizeRange, usedStackSize: CGFloat) -> CGFloat {
-        let minStackDimension = stackSizeRange.min.stackDimension(direction)
+        var minStackDimension = stackSizeRange.min.stackDimension(direction)
         let maxStackDimension = stackSizeRange.max.stackDimension(direction)
+        if fillStackOnGrow && maxStackDimension.isFinite {
+            minStackDimension = maxStackDimension
+        }
+        
         if (usedStackSize < minStackDimension) {
             return minStackDimension - usedStackSize
         }
