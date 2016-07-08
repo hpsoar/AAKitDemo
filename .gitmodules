@@ -1,0 +1,9 @@
+[submodule "AAModelKit"]
+	path = AAModelKit
+	url = https://git.oschina.net/hpsoar/AAModelKit.git
+[submodule "AAKitSwift"]
+	path = AAKitSwift
+	url = https://git.oschina.net/hpsoar/AAKitSwift.git
+[submodule "AAComponentKit"]
+	path = AAComponentKit
+	url = https://git.oschina.net/hpsoar/AAComponentKit.git
