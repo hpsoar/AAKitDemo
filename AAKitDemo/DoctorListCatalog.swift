@@ -16,6 +16,7 @@ class DoctorListLayout {
     var goodAtNode = AALabelNode()
     var figureNode = AAStaticNode(size: CGSizeMake(45, 45))
     var rootNode: AAStackNode!
+    var btnNode = AAStaticNode(size: CGSizeMake(80, 30))
     
     convenience init() {
         self.init(doctor: nil)
@@ -40,7 +41,8 @@ class DoctorListLayout {
                 AAVerticalStackNode().config(spacing: 5, alignItems: .Start).children([
                     AAHorizontalStackNode().config(spacing: 5, alignItems: .End).children([
                         self.nameNode.stackChild(),
-                        self.titleNode.stackChild(),
+                        self.titleNode.stackChild().flexShrink(true),
+                        self.btnNode.stackChild(),
                         ]).stackChild(),
                     
                     AAHorizontalStackNode().config(spacing: 5, alignItems: .End).children([
@@ -101,6 +103,7 @@ class DoctorListItemCell : AATableCell {
     let clinicLabel = NIAttributedLabel()
     let hospitalLabel = NIAttributedLabel()
     let goodAtLabel = NIAttributedLabel()
+    let btn = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -111,6 +114,8 @@ class DoctorListItemCell : AATableCell {
             clinicLabel,
             hospitalLabel,
             goodAtLabel,
+            btn.aa_config(font: UIFont.systemFontOfSize(14), hexColor: 0xff0000, title: "hello")
+               .aa_border(width: 1, hexColor: 0x00ff00, cornerRadius: 4)
             ])
     }
     
@@ -128,6 +133,7 @@ class DoctorListItemCell : AATableCell {
         item.layout.clinicNode.setup(clinicLabel)
         item.layout.hospitalNode.setup(hospitalLabel)
         item.layout.goodAtNode.setup(goodAtLabel)
+        item.layout.btnNode.setup(btn)
         
         return true
     }

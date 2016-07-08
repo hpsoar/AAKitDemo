@@ -57,7 +57,7 @@
     DoctorListOptions *doctorListOptions = (DoctorListOptions *)options;
     
     NSArray *names = @[@"张三", @"李四Aagf", @"王麻子yyyyy", @"AAfygf" ];
-    NSArray *titles = @[ @"主任医师", @"副主任医师", @"院长", @"zfghij" ];
+    NSArray *titles = @[ @"主任医师", @"副主任医师", @"院长", @"zfghij", @"的时发生的发撒的发水电费稍等发撒的发水电费安师大发撒春树暮云革" ];
     NSArray *clinics = @[ @"内科", @"外科", @"骨科", @"神经科", @"内分泌科", @"眼科", @"牙科" ];
     NSArray *hospitals = @[ @"北医三院", @"校医院", @"协和医院", @"同济医院" ];
     NSArray *goodAts = [[self class] goodAts];
@@ -67,7 +67,7 @@
         for (NSInteger i = 0; i < doctorListOptions.pageSize; ++i) {
             NSDictionary *d = @{ @"_id": @(doctorListOptions.page * doctorListOptions.pageSize + i),
                                  @"name": names[arc4random() % 4],
-                                 @"title": titles[arc4random() % 4],
+                                 @"title": titles[arc4random() % 5],
                                  @"clinic": clinics[arc4random() % 7],
                                  @"hospital": hospitals[arc4random() % 4],
                                  @"good_at": [[self class] randomGoodAt],

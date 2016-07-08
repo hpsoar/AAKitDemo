@@ -318,7 +318,7 @@ class AAStackNode: AAUINode {
         var isFirstFlex = true
         for child in flexChildren {
             let shrink = isFirstFlex ? (violationPerChild + remainViolation) : violationPerChild
-            child.node.size.shrinkStackDimension(direction, value: shrink)
+            child.node.size = child.node.size.shrinkStackDimension(direction, value: shrink)
             isFirstFlex = false
         }
     }
@@ -561,7 +561,7 @@ class AALabelAttributes {
     private var _textColor: UIColor?
     
     var lineBreakMode = NSLineBreakMode.ByTruncatingTail
-    var maximumNumberOfLines: Int = 0
+    var maximumNumberOfLines: Int = 1
     
     var alignment = NSTextAlignment.Left
     var firstLineHeadIndent: CGFloat = 0.0
