@@ -16,7 +16,7 @@ class DoctorListLayout {
     var goodAtNode = AALabelNode()
     var figureNode = AAStaticNode(size: CGSizeMake(45, 45))
     var rootNode: AAStackNode!
-    var btnNode = AAStaticNode(size: CGSizeMake(80, 30))
+    var btnNode = AAButtonNode(preferredSize: CGSizeMake(80, 30))
     
     convenience init() {
         self.init(doctor: nil)
@@ -33,6 +33,11 @@ class DoctorListLayout {
         
         goodAtNode.config(fontSize: 12, hexColor: 0x666666, text: doctor?.goodAt)
             .maximumNumberOfLines(2)
+        
+        btnNode.styleBlock { (btn) in
+            btn.aa_config(font: UIFont.systemFontOfSize(14), hexColor: 0xff0000, title: "hello")
+               .aa_border(width: 1, hexColor: 0x00ff00, cornerRadius: 4)
+        }
         
         rootNode = AAVerticalStackNode().config(spacing: 5, alignItems: .Start).children([
             AAHorizontalStackNode().children([
@@ -114,8 +119,7 @@ class DoctorListItemCell : AATableCell {
             clinicLabel,
             hospitalLabel,
             goodAtLabel,
-            btn.aa_config(font: UIFont.systemFontOfSize(14), hexColor: 0xff0000, title: "hello")
-               .aa_border(width: 1, hexColor: 0x00ff00, cornerRadius: 4)
+            btn
             ])
     }
     

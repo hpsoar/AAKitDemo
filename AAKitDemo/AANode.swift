@@ -58,12 +58,16 @@ extension CGSize {
 
 /// MARK: - Base Node
 
+typealias AAUINodeStyleBlock = (UIView) -> Void
+
 class AAUINode {
     var hidden = false
     
     var position = CGPointZero
     var size = CGSizeZero
     var frame = CGRectZero
+    
+    var styleBlock : AAUINodeStyleBlock?
     
     var sizeRange = AASizeRange()
     
@@ -79,9 +83,17 @@ class AAUINode {
         return self
     }
     
+    func styleBlock(styleBlock: AAUINodeStyleBlock) -> Self {
+        self.styleBlock = styleBlock
+        return self
+    }
+    
     func setup(view: UIView) {
         view.frame = frame
         view.hidden = hidden
+        if let block = self.styleBlock {
+            block(view)
+        }
     }
     
     func layoutIfNeeded(constrainedSize: AASizeRange) -> Void {
@@ -757,6 +769,60 @@ class AAUILabelNode : AALabelNode {
         Sizer.sizeLabel.numberOfLines = Int(config.maximumNumberOfLines)
         Sizer.sizeLabel.attributedText = config.attributedText
         size = Sizer.sizeLabel.sizeThatFits(maxSize)
+    }
+}
+
+class AAButtonNode : AAUINode {
+    var imageInsets = UIEdgeInsetsZero
+    var contentEdgeInsets = UIEdgeInsetsZero
+    var titleEdgeInsets = UIEdgeInsetsZero
+    var contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+    var contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+    var propotionalScale = false
+    var preferredSize = CGSizeZero
+    
+    init(preferredSize: CGSize) {
+        super.init()
+        self.preferredSize = preferredSize
+        sizeRange = AASizeRange(min: preferredSize, max: preferredSize)
+    }
+    
+    override func styleBlock(styleBlock: UIButton ->Void ) -> Self {
+        super.styleBlock { (v) in
+            if let btn = v as? UIButton {
+                styleBlock(btn)
+            }
+        }
+        return self
+    }
+    
+    override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
+        let minOfMax = constrainedSize.max.aa_min(sizeRange.max)
+        let minSize = sizeRange.min
+        
+        size.width = maxValue(preferredSize.width, v2: minSize.width, v3: minOfMax.width)
+        size.height = maxValue(preferredSize.height, v2: minSize.height, v3: minOfMax.height)
+        
+        if propotionalScale {
+            if size.width != preferredSize.width || size.height != preferredSize.height {
+                let r1 = size.height / preferredSize.height
+                let r2 = size.width / preferredSize.width
+                let minRatio = min(r1, r2)
+                size.width = preferredSize.width * minRatio
+                size.height = preferredSize.height * minRatio
+            }
+        }
+    }
+    
+    func maxValue(preferred: CGFloat, v2: CGFloat, v3: CGFloat) -> CGFloat {
+        var v = preferred
+        if v2.isFinite && v2 > v {
+            v = v2
+        }
+        if v3.isFinite && v3 > v {
+            v = v3
+        }
+        return v
     }
 }
 
