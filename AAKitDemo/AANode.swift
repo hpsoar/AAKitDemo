@@ -363,7 +363,8 @@ class AAStackNode: AAUINode {
     }
     
     func layoutChild(child: AAStackNodeChild, stackSizeRange: AASizeRange, usedStackSize: CGFloat) -> CGFloat {
-        let sizeRange = AASizeRange(max: stackSizeRange.max.shrinkStackDimension(direction, value: -usedStackSize))
+        let maxSize = stackSizeRange.max.shrinkStackDimension(direction, value: -usedStackSize).aa_nonnegative()
+        let sizeRange = AASizeRange(max: maxSize)
         child.node.calculateSizeIfNeeded(sizeRange)
         return child.node.size.stackDimension(direction)
     }
