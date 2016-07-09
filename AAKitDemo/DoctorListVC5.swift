@@ -126,7 +126,14 @@ class ASDoctorInfoNode : ASDisplayNode {
         addSubnode(titleNode)
         addSubnode(clinicNode)
         addSubnode(hospitalNode)
-        addSubnode(goodAtNode)        
+        addSubnode(goodAtNode)
+        
+//        figureNode.displaysAsynchronously = false
+//        nameNode.displaysAsynchronously = false
+//        titleNode.displaysAsynchronously = false
+//        clinicNode.displaysAsynchronously = false
+//        hospitalNode.displaysAsynchronously = false
+//        goodAtNode.displaysAsynchronously = false
     }
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {

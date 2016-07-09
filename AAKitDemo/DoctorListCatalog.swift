@@ -133,6 +133,7 @@ class DoctorListItem2: ASNodeObject {
     init(doctor: DoctorModel!) {
         self.doctor = doctor
         super.init(rootNode: ASDoctorInfoNode(doctor: doctor))
+        //rootNode.displaysAsynchronously = false
     }
     
 }
@@ -147,15 +148,15 @@ class ASNodeObject: AATableObject {
         super.init()
     }
     
-    var layout: ASLayoutSpec!
+    var layout: ASLayout!
     var rootNode: ASDisplayNode
     
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
         if layout == nil {
             let sizeRange = ASSizeRangeMake(CGSizeZero, CGSizeMake(tableView.width, CGFloat.max))
-            rootNode.measureWithSizeRange(sizeRange)
+            layout = rootNode.measureWithSizeRange(sizeRange)
             rootNode.layout()
-            cellHeight = rootNode.calculatedSize.height
+            cellHeight = rootNode.calculatedSize.height            
         }
     }
 
