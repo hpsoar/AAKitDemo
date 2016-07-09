@@ -58,7 +58,9 @@ class ASTableVC: UIViewController, ASTableDelegate, ASTableDataSource, AARefresh
     // MARK: - data source
     
     func tableView(tableView: ASTableView, nodeForRowAtIndexPath indexPath: NSIndexPath) -> ASCellNode {
-        return tableViewModel .objectAtIndexPath(indexPath) as! ASCellNode
+        let cell = tableViewModel .objectAtIndexPath(indexPath) as! ASCellNode
+        //cell.preferredFrameSize = CGSizeMake(tableView.width, CGFloat.max)
+        return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

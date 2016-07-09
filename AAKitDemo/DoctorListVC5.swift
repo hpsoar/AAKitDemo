@@ -68,31 +68,42 @@ class ASDoctorInfoNode : ASCellNode {
     }
     
     let doctor: DoctorModel
-    let nameNode: ASTextNode
-    let titleNode: ASTextNode
-    let figureNode: ASNetworkImageNode
-//    let clinicNode: ASTextNode
-//    let hospitalNode: ASTextNode
-//    let btn: ASButtonNode
+    let nameNode = ASTextNode()
+    let titleNode = ASTextNode()
+    let figureNode = ASNetworkImageNode()
+    let clinicNode = ASTextNode()
+    let hospitalNode = ASTextNode()
+    let goodAtNode = ASTextNode()
+    
+    //let btn: ASButtonNode
     
     init(doctor: DoctorModel) {
         self.doctor = doctor
         
-        nameNode = ASTextNode()
+        super.init()
+        
         nameNode.attributedText = attributedString(doctor.name, fontSize: 16, color: 0xff0000)
         
-        titleNode = ASTextNode()
-        titleNode.attributedText = attributedString(doctor.title, fontSize: 12, color: 0x00ff00)        
+        titleNode.attributedText = attributedString(doctor.title, fontSize: 12, color: 0x00ff00)
+        titleNode.flexShrink = true
+        titleNode.maximumNumberOfLines = 1
         
-        figureNode = ASNetworkImageNode()
+        clinicNode.attributedText = attributedString(doctor.clinic, fontSize: 12, color: 0x666666)
+        
+        hospitalNode.attributedText = attributedString(doctor.hospital, fontSize: 12, color: 0x666666)
+        
+        goodAtNode.attributedText = attributedString(doctor.goodAt, fontSize: 12, color: 0x666666)
+        goodAtNode.maximumNumberOfLines = 2
+        
         figureNode.URL = NSURL(string: "http://i.imgur.com/FjOR9kX.jpg")
         figureNode.preferredFrameSize = CGSizeMake(45, 45)
         
-        super.init()
-        
+        addSubnode(figureNode)
         addSubnode(nameNode)
         addSubnode(titleNode)
-        addSubnode(figureNode)
+        addSubnode(clinicNode)
+        addSubnode(hospitalNode)
+        addSubnode(goodAtNode)        
     }
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -100,12 +111,20 @@ class ASDoctorInfoNode : ASCellNode {
             nameNode, titleNode
             ])
         
-        let vStack = ASStackLayoutSpec(direction: .Vertical, spacing: 5, justifyContent: .Start, alignItems: .Start, children: [
-            nameTitle
+        let clinicHospital = ASStackLayoutSpec(direction: .Horizontal, spacing: 5, justifyContent: .Start, alignItems: .End, children: [
+            clinicNode, hospitalNode
             ])
         
+        let vStack = ASStackLayoutSpec(direction: .Vertical, spacing: 5, justifyContent: .Start, alignItems: .Start, children: [
+            nameTitle,
+            clinicHospital,
+            goodAtNode,
+            ])
+        vStack.flexShrink = true
+        
         let contentStack = ASStackLayoutSpec(direction: .Horizontal, spacing: 0, justifyContent: .Start, alignItems: .Start, children: [
-            figureNode, vStack,
+            ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 10), child: figureNode),
+            vStack,
             ])
         
         let contentSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(10, 10, 10, 10), child: contentStack)
