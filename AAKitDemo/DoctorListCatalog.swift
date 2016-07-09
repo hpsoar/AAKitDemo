@@ -87,7 +87,6 @@ class DoctorListItem: AATableObject {
         return DoctorListItemCell.self
     }
     
-    
 /// MARK - layout
     var layout: DoctorListLayout!
     var lastSize = CGSizeZero
@@ -108,16 +107,6 @@ class DoctorListItem: AATableObject {
 }
 
 class DoctorListItemCell : AATableCell {
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor.whiteColor()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
         super.shouldUpdateCellWithObject(object)
         

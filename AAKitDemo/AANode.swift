@@ -71,7 +71,6 @@ class AAUINode {
     
     var viewClass: AnyClass? = nil
     var viewBlock: (Void -> UIView)? = nil
-    var view: UIView? = nil
     
     var sizeRange = AASizeRange()
     
@@ -105,14 +104,8 @@ class AAUINode {
     /// MARK: - view
     
     func createView() -> UIView? {
-        if let v = view {
-            NSLog("a:%@", view!)
-            return v
-        }
-        
         if let cls = viewClass as? UIView.Type {
-            view =  cls.init()
-            NSLog("b:%@", view!)
+            let view =  cls.init()
             return view
         }
         
@@ -592,7 +585,10 @@ class AALabelAttributes {
     var text: String? = nil
     var attributedText: NSAttributedString? {
         get {
-            return _attributedText != nil ? _attributedText : buildAttributedString(text)
+            if _attributedText == nil {
+                _attributedText = buildAttributedString(text)
+            }
+            return _attributedText
         }
         set {
             _attributedText = newValue
