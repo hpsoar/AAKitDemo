@@ -126,33 +126,22 @@ class ASDoctorInfoNode : ASDisplayNode {
         //displaysAsynchronously(true)
     }
     
+    
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASVStackLayoutSpec(spacing: 5, alignItems: .Start, children: [
+        return [
+            [
+                figureNode.asInsets(UIEdgeInsetsMake(5, 0, 0, 10)),
+                [
+                    [nameNode, titleNode].asHStack().spacing(5).alignItems(.End),
+                    [clinicNode, hospitalNode].asHStack().alignItems(.End).spacing(5),
+                    goodAtNode as ASLayoutable,
+                ].asVStack().spacing(5).flexShrink(true)
+            ].asHStack().asInsets(UIEdgeInsetsMake(10, 10, 10, 10)),
             
-            ASInsetLayoutSpec(insets: UIEdgeInsetsMake(10, 10, 10, 10), child: (
-                
-                ASHStackLayoutSpec(spacing: 0, alignItems: .Start, children: [
-                    
-                    ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 10), child: figureNode),
-                    
-                    ASVStackLayoutSpec(spacing: 5, alignItems: .Start, children: [
-                        
-                        ASHStackLayoutSpec(spacing: 5, alignItems: .End, children: [
-                            nameNode,
-                            titleNode]),
-                        
-                        ASHStackLayoutSpec(spacing: 5, alignItems: .End, children: [
-                            clinicNode,
-                            hospitalNode]),
-                        
-                        goodAtNode,
-                        
-                        ]).flexShrink(true)
-                    ])
-            )),
             ASDisplayNode(viewBlock: { () -> UIView in
                 return UIView().aa_hexBackColor(0xcccccc)
-            })
-            ])
+            }) as ASLayoutable
+            
+            ].asVStack().spacing(5)
     }
 }

@@ -143,38 +143,6 @@ extension ASNetworkImageNode {
     }
 }
 
-extension ASStackLayoutSpec {
-    convenience init(children: [ASLayoutable]) {
-        self.init()
-        self.setChildren(children)
-    }
-    
-    func horizontalAlignment(horizontalAlignment: ASHorizontalAlignment) -> Self {
-        self.horizontalAlignment = horizontalAlignment
-        return self
-    }
-    
-    func verticalAlignment(verticalAlignment: ASVerticalAlignment) -> Self {
-        self.verticalAlignment = verticalAlignment
-        return self
-    }
-    
-    func justifyContent(justifyContent: ASStackLayoutJustifyContent) -> Self {
-        self.justifyContent = justifyContent
-        return self
-    }
-    
-    func child(child: ASLayoutable) -> Self {
-        setChild(child)
-        return self
-    }
-    
-    func children(children: [ASLayoutable]) -> Self {
-        setChildren(children)
-        return self
-    }
-}
-
 extension ASLayoutSpec {
     func spacingBefore(spacingBefore: CGFloat) -> Self {
         self.spacingBefore = spacingBefore
@@ -217,6 +185,66 @@ extension ASLayoutSpec {
     }    
 }
 
+extension ASLayoutable {
+    func asInsets(insets: UIEdgeInsets) -> ASInsetLayoutSpec {
+        return ASInsetLayoutSpec(insets: insets, child: self)
+    }
+}
+
+extension ASInsetLayoutSpec {
+    convenience init(child:ASLayoutable) {
+        self.init()
+        self.setChild(child)
+    }
+    
+    func insets(insets: UIEdgeInsets) -> Self {
+        self.insets = insets
+        return self
+    }
+}
+
+extension ASStackLayoutSpec {
+    convenience init(children: [ASLayoutable]) {
+        self.init()
+        self.setChildren(children)
+    }
+    
+    func horizontalAlignment(horizontalAlignment: ASHorizontalAlignment) -> Self {
+        self.horizontalAlignment = horizontalAlignment
+        return self
+    }
+    
+    func verticalAlignment(verticalAlignment: ASVerticalAlignment) -> Self {
+        self.verticalAlignment = verticalAlignment
+        return self
+    }
+    
+    func justifyContent(justifyContent: ASStackLayoutJustifyContent) -> Self {
+        self.justifyContent = justifyContent
+        return self
+    }
+    
+    func child(child: ASLayoutable) -> Self {
+        setChild(child)
+        return self
+    }
+    
+    func children(children: [ASLayoutable]) -> Self {
+        setChildren(children)
+        return self
+    }
+    
+    func spacing(spacing: CGFloat) -> Self {
+        self.spacing = spacing
+        return self
+    }
+    
+    func alignItems(alignItems: ASStackLayoutAlignItems) -> Self {
+        self.alignItems = alignItems
+        return self
+    }
+}
+
 class ASVStackLayoutSpec: ASStackLayoutSpec {
     convenience init(children: [ASLayoutable]) {
         self.init(spacing:0, alignItems: .Start, children: children)
@@ -248,3 +276,20 @@ class ASHStackLayoutSpec: ASStackLayoutSpec {
     }
 }
 
+extension Array where Element:ASLayoutable {
+    func asStack(direction: ASStackLayoutDirection, spacing: CGFloat) -> ASStackLayoutSpec {
+        return ASStackLayoutSpec(direction: direction, spacing: spacing, justifyContent: .Start, alignItems: .Start, children: self)
+    }
+    
+    func asStack(direction: ASStackLayoutDirection) -> ASStackLayoutSpec {
+        return asStack(direction, spacing: 0)
+    }
+    
+    func asVStack() -> ASStackLayoutSpec {
+        return asStack(.Vertical, spacing: 0)
+    }
+    
+    func asHStack() -> ASStackLayoutSpec {
+        return asStack(.Horizontal, spacing: 0)
+    }
+}
