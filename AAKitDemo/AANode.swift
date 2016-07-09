@@ -665,6 +665,20 @@ class AALabelAttributes {
 }
 
 extension AALabelAttributes {
+    convenience init(font: UIFont, hexColor: NSInteger, text: String?) {
+        self.init()
+        self.font = font
+        self.hexColor = hexColor
+        self.text = text
+    }
+    
+    convenience init(fontSize: CGFloat, hexColor: NSInteger, text: String?) {
+        self.init()
+        self.fontSize = fontSize
+        self.hexColor = hexColor
+        self.text = text
+    }
+    
     func text(text: String?) -> Self {
         self.text = text
         return self

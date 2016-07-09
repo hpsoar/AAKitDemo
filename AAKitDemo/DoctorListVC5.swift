@@ -51,14 +51,9 @@ class DoctorListVC5: ASTableVC {
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         tableNode.view.relayoutItems()
     }
-
 }
 
-func attributedString(text: String, fontSize: CGFloat, color: NSInteger) -> NSAttributedString {
-    let d = [ NSFontAttributeName: UIFont.systemFontOfSize(fontSize),
-              NSForegroundColorAttributeName: UIColor.hexColor(color)]
-    return NSAttributedString(string: text, attributes: d)
-}
+
 
 class ASDoctorInfoCellNode: ASCellNode {
     class func itemsWithDoctors(doctors: [DoctorModel]) -> [ASDoctorInfoCellNode] {
@@ -105,69 +100,59 @@ class ASDoctorInfoNode : ASDisplayNode {
         
         super.init()
         
-        nameNode.attributedText = attributedString(doctor.name, fontSize: 16, color: 0xff0000)
+        nameNode.style(fontSize: 16, hexColor: 0xff0000, text: doctor.name).applyStyle()
         
-        titleNode.attributedText = attributedString(doctor.title, fontSize: 12, color: 0x00ff00)
-        titleNode.flexShrink = true
-        titleNode.maximumNumberOfLines = 1
+        titleNode.style(fontSize: 12, hexColor: 0x00ff00, text: doctor.title)
+            .flexShrink(true).maximumNumberOfLines(1).applyStyle()
         
-        clinicNode.attributedText = attributedString(doctor.clinic, fontSize: 12, color: 0x666666)
+        clinicNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.clinic).applyStyle()
+        hospitalNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.hospital).applyStyle()
         
-        hospitalNode.attributedText = attributedString(doctor.hospital, fontSize: 12, color: 0x666666)
+        goodAtNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.goodAt)
+            .maximumNumberOfLines(2).applyStyle()
         
-        goodAtNode.attributedText = attributedString(doctor.goodAt, fontSize: 12, color: 0x666666)
-        goodAtNode.maximumNumberOfLines = 2
+        figureNode.preferredFrameSize(CGSizeMake(45, 45))
+            .URL("http://i.imgur.com/FjOR9kX.jpg")
         
-        figureNode.URL = NSURL(string: "http://i.imgur.com/FjOR9kX.jpg")
-        figureNode.preferredFrameSize = CGSizeMake(45, 45)
+        addSubnodes([
+            figureNode,
+            nameNode,
+            titleNode,
+            clinicNode,
+            hospitalNode,
+            goodAtNode
+            ])
         
-        addSubnode(figureNode)
-        addSubnode(nameNode)
-        addSubnode(titleNode)
-        addSubnode(clinicNode)
-        addSubnode(hospitalNode)
-        addSubnode(goodAtNode)
-        
-//        figureNode.displaysAsynchronously = false
-//        nameNode.displaysAsynchronously = false
-//        titleNode.displaysAsynchronously = false
-//        clinicNode.displaysAsynchronously = false
-//        hospitalNode.displaysAsynchronously = false
-//        goodAtNode.displaysAsynchronously = false
+        //displaysAsynchronously(true)
     }
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let nameTitle = ASStackLayoutSpec(direction: .Horizontal, spacing: 5, justifyContent: .Start, alignItems: .End, children: [
-            nameNode, titleNode
+        return ASVStackLayoutSpec(spacing: 5, alignItems: .Start, children: [
+            
+            ASInsetLayoutSpec(insets: UIEdgeInsetsMake(10, 10, 10, 10), child: (
+                
+                ASHStackLayoutSpec(spacing: 0, alignItems: .Start, children: [
+                    
+                    ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 10), child: figureNode),
+                    
+                    ASVStackLayoutSpec(spacing: 5, alignItems: .Start, children: [
+                        
+                        ASHStackLayoutSpec(spacing: 5, alignItems: .End, children: [
+                            nameNode,
+                            titleNode]),
+                        
+                        ASHStackLayoutSpec(spacing: 5, alignItems: .End, children: [
+                            clinicNode,
+                            hospitalNode]),
+                        
+                        goodAtNode,
+                        
+                        ]).flexShrink(true)
+                    ])
+            )),
+            ASDisplayNode(viewBlock: { () -> UIView in
+                return UIView().aa_hexBackColor(0xcccccc)
+            })
             ])
-        
-        let clinicHospital = ASStackLayoutSpec(direction: .Horizontal, spacing: 5, justifyContent: .Start, alignItems: .End, children: [
-            clinicNode, hospitalNode
-            ])
-        
-        let vStack = ASStackLayoutSpec(direction: .Vertical, spacing: 5, justifyContent: .Start, alignItems: .Start, children: [
-            nameTitle,
-            clinicHospital,
-            goodAtNode,
-            ])
-        vStack.flexShrink = true
-        
-        let contentStack = ASStackLayoutSpec(direction: .Horizontal, spacing: 0, justifyContent: .Start, alignItems: .Start, children: [
-            ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 10), child: figureNode),
-            vStack,
-            ])
-        
-        let contentSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(10, 10, 10, 10), child: contentStack)
-        
-        let sep = ASDisplayNode { () -> UIView in
-            return UIView().aa_hexBackColor(0xcccccc)
-        }
-        
-        let mainStack = ASStackLayoutSpec(direction: .Vertical, spacing: 5, justifyContent: .Start, alignItems: .Start, children: [
-            contentSpec,
-            sep
-            ])
-        
-        return mainStack
     }
 }
