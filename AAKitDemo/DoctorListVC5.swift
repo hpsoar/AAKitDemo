@@ -31,7 +31,7 @@ class DoctorListVC5: ASTableVC {
         else {
             let doctors = result.model as! [AnyObject!]
             
-            let items = ASDoctorInfoNode.itemsWithDoctors(doctors as! [DoctorModel])
+            let items = ASDoctorInfoCellNode.itemsWithDoctors(doctors as! [DoctorModel])
             
             if doctorListOptions.page == 0 {
                 modelViewUpdater.reloadWithObjects(items)
@@ -60,7 +60,30 @@ func attributedString(text: String, fontSize: CGFloat, color: NSInteger) -> NSAt
     return NSAttributedString(string: text, attributes: d)
 }
 
-class ASDoctorInfoNode : ASCellNode {
+class ASDoctorInfoCellNode: ASCellNode {
+    class func itemsWithDoctors(doctors: [DoctorModel]) -> [ASDoctorInfoCellNode] {
+        return doctors.map({ (d) -> ASDoctorInfoCellNode in
+            return ASDoctorInfoCellNode(doctor: d)
+        })
+    }
+    
+    let node: ASDisplayNode
+    
+    init(doctor: DoctorModel) {
+        node = ASDoctorInfoNode(doctor: doctor)
+        super.init()
+        
+        for n in node.subnodes {
+            addSubnode(n)
+        }
+    }
+    
+    override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return node.layoutSpecThatFits(constrainedSize)
+    }
+}
+
+class ASDoctorInfoNode : ASDisplayNode {
     class func itemsWithDoctors(doctors: [DoctorModel]) -> [ASDoctorInfoNode] {
         return doctors.map({ (d) -> ASDoctorInfoNode in
             return ASDoctorInfoNode(doctor: d)

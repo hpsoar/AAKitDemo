@@ -120,3 +120,58 @@ class DoctorListItemCell : AATableCell {
         contentView.aa_removeAllSubviews()
     }
 }
+
+class DoctorListItem2: ASNodeObject {
+    let doctor : DoctorModel!
+    
+    class func itemsWithDoctors(doctors: NSArray) -> NSArray {
+        return doctors.aa_map({ (obj, idx) -> AnyObject? in
+            return DoctorListItem2(doctor: obj as! DoctorModel)
+        })
+    }
+    
+    init(doctor: DoctorModel!) {
+        self.doctor = doctor
+        super.init(rootNode: ASDoctorInfoNode(doctor: doctor))
+    }
+    
+}
+
+class ASNodeObject: AATableObject {
+    override func cellClass() -> AnyClass! {
+        return ASNodeCell.self
+    }
+    
+    init(rootNode: ASDisplayNode) {
+        self.rootNode = rootNode
+        super.init()
+    }
+    
+    var layout: ASLayoutSpec!
+    var rootNode: ASDisplayNode
+    
+    override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
+        if layout == nil {
+            let sizeRange = ASSizeRangeMake(CGSizeZero, CGSizeMake(tableView.width, CGFloat.max))
+            rootNode.measureWithSizeRange(sizeRange)
+            rootNode.layout()
+            cellHeight = rootNode.calculatedSize.height
+        }
+    }
+
+}
+
+class ASNodeCell: AATableCell {
+    override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
+        super.shouldUpdateCellWithObject(object)
+        
+        let item = object as! ASNodeObject
+        contentView.addSubnode(item.rootNode)
+        
+        return true
+    }
+    
+    override func prepareForReuse() {
+        contentView.aa_removeAllSubviews()
+    }
+}

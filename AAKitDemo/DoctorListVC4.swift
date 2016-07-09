@@ -30,7 +30,7 @@ class DoctorListVC4 : NITableVC {
         else {
             let doctors = result.model as! [AnyObject!]
             
-            let items = DoctorListItem.itemsWithDoctors(doctors)  as [AnyObject]
+            let items = DoctorListItem2.itemsWithDoctors(doctors)  as [AnyObject]
             
             if doctorListOptions.page == 0 {
                 modelViewUpdater.reloadWithObjects(items)
