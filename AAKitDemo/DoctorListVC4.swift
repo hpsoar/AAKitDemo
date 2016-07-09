@@ -46,4 +46,10 @@ class DoctorListVC4 : NITableVC {
             refreshController.enableFooterRefresh()
         }
     }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        tableView.reloadData()
+    }
+    //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+
 }

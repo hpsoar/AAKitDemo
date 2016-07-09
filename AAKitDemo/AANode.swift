@@ -70,6 +70,8 @@ class AAUINode {
     var styleBlock : AAUINodeStyleBlock?
     
     var viewClass: AnyClass? = nil
+    var viewBlock: (Void -> UIView)? = nil
+    var view: UIView? = nil
     
     var sizeRange = AASizeRange()
     
@@ -103,9 +105,17 @@ class AAUINode {
     /// MARK: - view
     
     func createView() -> UIView? {
-        if let cls = viewClass as? UIView.Type {
-            return cls.init()
+        if let v = view {
+            NSLog("a:%@", view!)
+            return v
         }
+        
+        if let cls = viewClass as? UIView.Type {
+            view =  cls.init()
+            NSLog("b:%@", view!)
+            return view
+        }
+        
         return nil
     }
     

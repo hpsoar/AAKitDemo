@@ -30,7 +30,7 @@
     [self.view addSubview:[self btnWithTitle:@"ck table" sel:@selector(ckTableVCDemo:)]];
     [self.view addSubview:[self btnWithTitle:@"ni table" sel:@selector(niTableVCDemo:)]];
     [self.view addSubview:[self btnWithTitle:@"asyncdisplay kit" sel:@selector(asyncDisplayDemo:)]];
-    
+    [self.view addSubview:[self btnWithTitle:@"as tableview" sel:@selector(asTableViewDemo:)]];
 }
 
 - (UIButton *)btnWithTitle:(NSString *)title sel:(SEL)sel {
@@ -71,6 +71,11 @@
 
 - (void)asyncDisplayDemo:(id)sender {
     AsyncDisplayKitDemo *vc = [AsyncDisplayKitDemo new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)asTableViewDemo:(id)sender {
+    DoctorListVC5 *vc = [DoctorListVC5 new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

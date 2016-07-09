@@ -48,6 +48,8 @@
 		12C38E151D2F281300D26266 /* TestCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C38E081D2F281300D26266 /* TestCollectionVC.m */; };
 		12C38E161D2F281300D26266 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12C38E0A1D2F281300D26266 /* ViewController.mm */; };
 		12F6125B1D3023F40081D6E9 /* AANodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125A1D3023F40081D6E9 /* AANodeLabel.swift */; };
+		12F6125D1D30D8AD0081D6E9 /* ASTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125C1D30D8AD0081D6E9 /* ASTableVC.swift */; };
+		12F6125F1D30EF370081D6E9 /* DoctorListVC5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */; };
 		3D810827AF110019DFDDC4F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 550973F0616605558AF6CAA5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +148,8 @@
 		12C38E091D2F281300D26266 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		12C38E0A1D2F281300D26266 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		12F6125A1D3023F40081D6E9 /* AANodeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AANodeLabel.swift; sourceTree = "<group>"; };
+		12F6125C1D30D8AD0081D6E9 /* ASTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASTableVC.swift; sourceTree = "<group>"; };
+		12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorListVC5.swift; sourceTree = "<group>"; };
 		4942C2E9F866968AC224EFC3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		550973F0616605558AF6CAA5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F937B15061A52C005C5FD8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -336,6 +340,8 @@
 				12C38DCE1D2F256900D26266 /* LaunchScreen.storyboard */,
 				12C38DD11D2F256900D26266 /* Info.plist */,
 				12F6125A1D3023F40081D6E9 /* AANodeLabel.swift */,
+				12F6125C1D30D8AD0081D6E9 /* ASTableVC.swift */,
+				12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */,
 			);
 			path = AAKitDemo;
 			sourceTree = "<group>";
@@ -582,6 +588,8 @@
 				127E349C1D2F2DE5000EB373 /* Color_AAKit.swift in Sources */,
 				127E34B71D2F2DE5000EB373 /* AATableObjectCatalog.m in Sources */,
 				127E349F1D2F2DE5000EB373 /* UIView_AAKit.swift in Sources */,
+				12F6125D1D30D8AD0081D6E9 /* ASTableVC.swift in Sources */,
+				12F6125F1D30EF370081D6E9 /* DoctorListVC5.swift in Sources */,
 				127E349D1D2F2DE5000EB373 /* NSArray_AAKit.swift in Sources */,
 				12C38E121D2F281300D26266 /* DoctorListVC4.swift in Sources */,
 				127E34B31D2F2DE5000EB373 /* AAModelRefresher.m in Sources */,

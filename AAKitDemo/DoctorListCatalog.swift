@@ -90,9 +90,10 @@ class DoctorListItem: AATableObject {
     
 /// MARK - layout
     var layout: DoctorListLayout!
+    var lastSize = CGSizeZero
 
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
-        if layout == nil {
+        if layout == nil || lastSize.width != tableView.width {
             let doctor = (item as! DoctorListItem).doctor
         
             layout = DoctorListLayout(doctor: doctor)
@@ -100,6 +101,8 @@ class DoctorListItem: AATableObject {
             let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
             layout.layoutIfNeeded(contrainedSize)
             cellHeight = layout.rootNode.size.height
+            
+            lastSize = tableView.size
         }
     }
 }
@@ -108,7 +111,7 @@ class DoctorListItemCell : AATableCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        contentView.backgroundColor = UIColor.whiteColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
