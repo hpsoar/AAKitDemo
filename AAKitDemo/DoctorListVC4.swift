@@ -20,7 +20,7 @@ class DoctorListVC4 : NITableVC {
         
         refreshController.enableHeaderRefresh()
         
-        modelRefresher.refresh(.Top)                
+        modelRefresher.refresh(.Top)
     }
     
     override func refresher(refresher: AAModelRefresher!, didFinishLoadWithType type: ModelRefreshType, result: AAModelResult!) {

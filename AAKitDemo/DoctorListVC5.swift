@@ -100,21 +100,26 @@ class ASDoctorInfoNode : ASDisplayNode {
         
         super.init()
         
-        nameNode.style(fontSize: 16, hexColor: 0xff0000, text: doctor.name).applyStyle()
+        nameNode.style(asd_textStyle(fontSize: 16, hexColor: 0xff0000, text: doctor.name))
         
-        titleNode.style(fontSize: 12, hexColor: 0x00ff00, text: doctor.title)
-            .flexShrink(true).maximumNumberOfLines(1).applyStyle()
+        titleNode.style(asd_textStyle(fontSize: 12, hexColor: 0x00ff00, text: doctor.title))
+            .flexShrink(true).maximumNumberOfLines(1)
         
-        clinicNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.clinic).applyStyle()
-        hospitalNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.hospital).applyStyle()
+        clinicNode.style(asd_textStyle(fontSize: 12, hexColor: 0x666666, text: doctor.clinic))
         
-        goodAtNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.goodAt)
-            .applyStyle().maximumNumberOfLines(2)
+        hospitalNode.style(asd_textStyle(fontSize: 12, hexColor: 0x666666, text: doctor.hospital))
+        
+        goodAtNode.style(asd_textStyle(fontSize: 12, hexColor: 0x666666, text: doctor.goodAt))
+            .maximumNumberOfLines(2)
         
         figureNode.preferredFrameSize(CGSizeMake(45, 45))
             .URL("http://i.imgur.com/FjOR9kX.jpg")
         
-        btn.title("hello", fontSize: 14, hexColor: 0x0000ff, forState: .Normal).border(width: 1, hexColor: 0xff0000, cornerRadius: 4).contentEdgeInsets(UIEdgeInsetsMake(3, 5, 3, 5))
+        btn.title("hello", fontSize: 14, hexColor: 0x0000ff, forState: .Normal)
+            .border(width: 1, hexColor: 0xff0000, cornerRadius: 4)
+            .contentEdgeInsets(UIEdgeInsetsMake(3, 5, 3, 5))
+            .userInteractionEnabled(true)
+            .addTarget(self, action: #selector(test(_:)), forControlEvents: .TouchUpInside)
         
         addSubnodes([
             figureNode,
@@ -126,7 +131,11 @@ class ASDoctorInfoNode : ASDisplayNode {
             btn
             ])
         
-        //displaysAsynchronously(true)
+        displaysAsynchronously(true)
+    }
+    
+    func test(sender: AnyObject) {
+        NSLog("%@", "hello")
     }
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {

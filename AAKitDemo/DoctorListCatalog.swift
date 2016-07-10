@@ -153,9 +153,7 @@ class ASNodeObject: AATableObject {
     
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
         if layout == nil {
-            let sizeRange = ASSizeRangeMake(CGSizeMake(tableView.width, 0), CGSizeMake(tableView.width, CGFloat.max))
-            layout = rootNode.measureWithSizeRange(sizeRange)
-            rootNode.layout()
+            layout = rootNode.asd_layout(width: tableView.width)            
             cellHeight = rootNode.calculatedSize.height            
         }
     }

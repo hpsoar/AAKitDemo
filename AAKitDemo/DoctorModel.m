@@ -66,10 +66,10 @@
     if (doctorListOptions.pageSize * doctorListOptions.page < dataCount) {
         for (NSInteger i = 0; i < doctorListOptions.pageSize; ++i) {
             NSDictionary *d = @{ @"_id": @(doctorListOptions.page * doctorListOptions.pageSize + i),
-                                 @"name": names[arc4random() % 4],
-                                 @"title": titles[arc4random() % 5],
-                                 @"clinic": clinics[arc4random() % 7],
-                                 @"hospital": hospitals[arc4random() % 4],
+                                 @"name": names[[[self class] random] % 4],
+                                 @"title": titles[[[self class] random] % 5],
+                                 @"clinic": clinics[[[self class] random] % 7],
+                                 @"hospital": hospitals[[[self class]random] % 4],
                                  @"good_at": [[self class] randomGoodAt],
                                  };
             [result addObject:d];
@@ -89,9 +89,13 @@
               @"dsfasdfasdfsadfsafsadfasdfasdfas sdfsadfasdf asdfasdfasdfsad asdfsadfasdf asdfasdfasdfsadf asdfadsfsadf  asdfasdfdsfasdd   asdfasdfsafd"];
 }
 
++ (NSInteger)random {
+    return arc4random();
+}
+
 + (NSString *)randomGoodAt {
     static int r = 0;
-    r = arc4random() % 5;
+    r = [self random] % 5;
     return [self goodAts][r];
 }
 

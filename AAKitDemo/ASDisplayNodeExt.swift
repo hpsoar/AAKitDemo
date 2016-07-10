@@ -11,6 +11,21 @@ import ObjectiveC
 
 extension ASDisplayNode {
     
+    func asd_layout(sizeRange sizeRange: ASSizeRange) -> ASLayout {
+        let layout = measureWithSizeRange(sizeRange)
+        self.layout()
+        self.frame = CGRectMake(0, 0, self.calculatedSize.width, self.calculatedSize.height)
+        return layout
+    }
+    
+    func asd_layout(width width: CGFloat) -> ASLayout {
+        return asd_layout(sizeRange: ASSizeRangeMake(CGSizeMake(width, 0), CGSizeMake(width, CGFloat.max)))
+    }
+    
+    func asd_layout(width width: CGFloat, height: CGFloat) -> ASLayout {
+        return asd_layout(sizeRange: ASSizeRangeMake(CGSizeMake(width, height), CGSizeMake(width, height)))
+    }
+    
     func spacingBefore(spacingBefore: CGFloat) -> Self {
         self.spacingBefore = spacingBefore
         return self
@@ -60,6 +75,11 @@ extension ASDisplayNode {
         for n in nodes {
             addSubnode(n)
         }
+        return self
+    }
+    
+    func addToSupernode(superNode: ASDisplayNode) -> Self {
+        superNode.addSubnode(self)
         return self
     }
     
@@ -252,27 +272,28 @@ extension ASTextNode {
         return self
     }
     
-    func style(font font: UIFont, hexColor: NSInteger, text: String?) -> Self {
-        style.font(font).hexColor(hexColor).text(text)
-        return self
-    }
-    
-    func style(fontSize fontSize: CGFloat, hexColor: NSInteger, text: String?) -> Self {
-        return style(font:UIFont.systemFontOfSize(fontSize), hexColor: hexColor, text: text)
-    }
-    
     func style(style: AALabelAttributes) -> Self {
         self.style = style
         self.applyStyle()
         return self
     }
     
-    func applyStyle() -> Self {
-        self.maximumNumberOfLines = UInt(style.maximumNumberOfLines)
-        self.truncationMode = style.lineBreakMode
+    private func applyStyle() -> Self {        
         self.attributedText = style.attributedText ?? self.attributedText
         return self
     }
+}
+
+func asd_textStyle() -> AALabelAttributes {
+    return AALabelAttributes()
+}
+
+func asd_textStyle(fontSize fontSize: CGFloat, hexColor: NSInteger, text: String?) -> AALabelAttributes {
+    return AALabelAttributes(fontSize: fontSize, hexColor: hexColor, text: text)
+}
+
+func asd_textStyle(font font: UIFont, hexColor: NSInteger, text: String?) -> AALabelAttributes {
+    return AALabelAttributes(font: font, hexColor: hexColor, text: text)
 }
 
 extension ASNetworkImageNode {
