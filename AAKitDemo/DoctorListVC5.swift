@@ -95,6 +95,12 @@ class ASDoctorInfoNode : ASDisplayNode {
     
     let btn: ASButtonNode = ASButtonNode()
     
+    let dumb: ASCustomNode = ASCustomNode()
+    
+    let line = ASDisplayNode(viewBlock: { () -> UIView in
+        return UIView().aa_backgroundHexColor(0xcccccc)
+    }).preferredFrameSize(CGSizeMake(CGFloat.max, 0.5))
+    
     init(doctor: DoctorModel) {
         self.doctor = doctor
         
@@ -128,7 +134,8 @@ class ASDoctorInfoNode : ASDisplayNode {
             clinicNode,
             hospitalNode,
             goodAtNode,
-            btn
+            btn,
+            line
             ])
         
         displaysAsynchronously(true)
@@ -160,12 +167,11 @@ class ASDoctorInfoNode : ASDisplayNode {
                             hospitalNode
                             ]),
                         goodAtNode,
+                        dumb,
                         ])
                     ])
             ),
-            ASDisplayNode(viewBlock: { () -> UIView in
-                return UIView().aa_backgroundHexColor(0xcccccc)
-            }) as ASLayoutable
+            line
             ])
     }
 }
