@@ -93,7 +93,7 @@ class ASDoctorInfoNode : ASDisplayNode {
     let hospitalNode = ASTextNode()
     let goodAtNode = ASTextNode()
     
-    //let btn: ASButtonNode
+    let btn: ASButtonNode = ASButtonNode()
     
     init(doctor: DoctorModel) {
         self.doctor = doctor
@@ -109,10 +109,12 @@ class ASDoctorInfoNode : ASDisplayNode {
         hospitalNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.hospital).applyStyle()
         
         goodAtNode.style(fontSize: 12, hexColor: 0x666666, text: doctor.goodAt)
-            .maximumNumberOfLines(2).applyStyle()
+            .applyStyle().maximumNumberOfLines(2)
         
         figureNode.preferredFrameSize(CGSizeMake(45, 45))
             .URL("http://i.imgur.com/FjOR9kX.jpg")
+        
+        btn.title("hello", fontSize: 14, hexColor: 0x0000ff, forState: .Normal).border(width: 1, hexColor: 0xff0000, cornerRadius: 4).contentEdgeInsets(UIEdgeInsetsMake(3, 5, 3, 5))
         
         addSubnodes([
             figureNode,
@@ -120,7 +122,8 @@ class ASDoctorInfoNode : ASDisplayNode {
             titleNode,
             clinicNode,
             hospitalNode,
-            goodAtNode
+            goodAtNode,
+            btn
             ])
         
         //displaysAsynchronously(true)
@@ -132,16 +135,21 @@ class ASDoctorInfoNode : ASDisplayNode {
             [
                 figureNode.asInsets(UIEdgeInsetsMake(5, 0, 0, 10)),
                 [
-                    [nameNode, titleNode].asHStack().spacing(5).alignItems(.End),
+                    [   nameNode,
+                        titleNode.flexGrow(true),
+                        btn
+                    ].asHStack().spacing(5).alignItems(.End),
+                    
                     [clinicNode, hospitalNode].asHStack().alignItems(.End).spacing(5),
+                    
                     goodAtNode as ASLayoutable,
-                ].asVStack().spacing(5).flexShrink(true)
+                ].asVStack().alignItems(.Stretch).spacing(5).flexShrink(true).flexGrow(true)
             ].asHStack().asInsets(UIEdgeInsetsMake(10, 10, 10, 10)),
             
             ASDisplayNode(viewBlock: { () -> UIView in
-                return UIView().aa_hexBackColor(0xcccccc)
+                return UIView().aa_backgroundHexColor(0xcccccc)
             }) as ASLayoutable
             
-            ].asVStack().spacing(5)
+            ].asVStack().alignItems(.Stretch).spacing(5)
     }
 }

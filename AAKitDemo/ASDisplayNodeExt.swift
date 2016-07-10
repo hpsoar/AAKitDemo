@@ -41,6 +41,11 @@ extension ASDisplayNode {
         return self
     }
     
+//    func sizeRange(sizeRange: ASSizeRange) -> Self {
+//        self.sizeRange = sizeRange
+//        return self
+//    }
+    
     func ascender(ascender: CGFloat) -> Self {
         self.ascender = ascender
         return self
@@ -68,6 +73,154 @@ extension ASDisplayNode {
         for n in subnodes {
             n.displaysAsynchronously = displaysAsynchronously
         }
+        return self
+    }
+}
+
+extension ASDisplayNode {
+    
+    func contents(contents: AnyObject?) -> Self {
+        self.contents = contents
+        return self
+    }
+    
+    func clipsToBounds(clipsToBounds: Bool) -> Self {
+        self.clipsToBounds = clipsToBounds
+        return self
+    }
+    
+    func opaque(opaque: Bool) -> Self {
+        self.opaque = opaque
+        return self
+    }
+    
+    func allowsEdgeAntialiasing(allowsEdgeAntialiasing: Bool) -> Self {
+        self.allowsEdgeAntialiasing = allowsEdgeAntialiasing
+        return self
+    }
+    
+    func edgeAntialiasingMask(edgeAntialiasingMask: UInt32) -> Self {
+        self.edgeAntialiasingMask = edgeAntialiasingMask
+        return self
+    }
+    
+    func hidden(hidden: Bool) -> Self {
+        self.hidden = hidden
+        return self
+    }
+    
+    func autoresizesSubviews(autoresizesSubviews: Bool) -> Self {
+        self.autoresizesSubviews = autoresizesSubviews
+        return self
+    }
+    
+    func autoresizingMask(autoresizingMask: UIViewAutoresizing) -> Self {
+        self.autoresizingMask = autoresizingMask
+        return self
+    }
+    
+    func alpha(alpha: CGFloat) -> Self {
+        self.alpha = alpha
+        return self
+    }
+    
+    func frame(frame: CGRect) -> Self {
+        self.frame = frame
+        return self
+    }
+    
+    func contentsScale(contentsScale: CGFloat) -> Self {
+        self.contentsScale = contentsScale
+        return self
+    }
+    
+    func backgroundColor(color: UIColor?) -> Self {
+        backgroundColor = color
+        return self
+    }
+    
+    func backgroundHexColor(hexColor: NSInteger) -> Self {
+        return backgroundColor(UIColor.hexColor(hexColor))
+    }
+    
+    func contentMode(contentMode: UIViewContentMode) -> Self {
+        self.contentMode = contentMode
+        return self
+    }
+    
+    func userInteractionEnabled(userInteractionEnabled: Bool) -> Self {
+        self.userInteractionEnabled = userInteractionEnabled
+        return self
+    }
+    
+    func exclusiveTouch(exclusiveTouch: Bool) -> Self {
+        self.exclusiveTouch = exclusiveTouch
+        return self
+    }
+    
+    func cornerRadius(cornerRadius: CGFloat) -> Self {
+        self.cornerRadius = cornerRadius
+        clipsToBounds = true
+        return self
+    }
+    
+    func borderColor(color: UIColor) -> Self {
+        self.borderColor = color.CGColor
+        return self
+    }
+    
+    func borderHexColor(hexColor: NSInteger) -> Self {
+        return borderColor(UIColor.hexColor(hexColor))
+    }
+    
+    func borderWidth(width: CGFloat) -> Self {
+        self.borderWidth = width
+        return self
+    }
+    
+    func border(width width: CGFloat, hexColor: NSInteger, cornerRadius: CGFloat) -> Self {
+        return borderWidth(width).borderHexColor(hexColor).cornerRadius(cornerRadius)
+    }
+    
+    func shadow(offset: CGSize, radius:CGFloat, color:UIColor, opacity:CGFloat) -> Self {
+        self.shadowOffset = offset
+        self.shadowRadius = radius
+        self.shadowColor = color.CGColor
+        self.shadowOpacity = opacity
+        return self
+    }
+    
+    func shadow(offset: CGSize, radius:CGFloat, hexColor:NSInteger, opacity:CGFloat) -> Self {
+        return shadow(offset, radius: radius, color: UIColor.hexColor(hexColor), opacity: opacity)
+    }
+    
+    func shadowOffset(shadowOffset: CGSize) -> Self {
+        self.shadowOffset = shadowOffset
+        return self
+    }
+    
+    func shadowRadius(shadowRadius: CGFloat) -> Self {
+        self.shadowRadius = shadowRadius
+        return self
+    }
+    
+    func shadowColor(shadowColor: UIColor) -> Self {
+        self.shadowColor = shadowColor.CGColor
+        return self
+    }
+    
+    func shadowHexColor(hexColor: NSInteger) -> Self {
+        self.shadowColor = UIColor.hexColor(hexColor).CGColor
+        return self
+    }
+    
+    func shadowOpacity(shadowOpacity: CGFloat) -> Self {
+        self.shadowOpacity = shadowOpacity
+        return self
+    }
+    
+    func needsDisplayOnBoundsChange(needsDisplayOnBoundsChange: Bool) -> Self {
+        self.needsDisplayOnBoundsChange = needsDisplayOnBoundsChange
         return self
     }
 }
@@ -291,5 +444,75 @@ extension Array where Element:ASLayoutable {
     
     func asHStack() -> ASStackLayoutSpec {
         return asStack(.Horizontal, spacing: 0)
+    }
+}
+
+extension ASButtonNode {
+    
+    func contentSpacing(contentSpacing: CGFloat) -> Self {
+        self.contentSpacing = contentSpacing
+        return self
+    }
+    
+    func laysOutHorizontally(laysOutHorizontally: Bool) -> Self {
+        self.laysOutHorizontally = laysOutHorizontally
+        return self
+    }
+    
+    func contentHorizontalAlignment(contentHorizontalAlignment: ASHorizontalAlignment) -> Self {
+        self.contentHorizontalAlignment = contentHorizontalAlignment
+        return self
+    }
+    
+    func contentVerticalAlignment(contentVerticalAlignment: ASVerticalAlignment) -> Self {
+        self.contentVerticalAlignment = contentVerticalAlignment
+        return self
+    }
+    
+    func contentEdgeInsets(contentEdgeInsets: UIEdgeInsets) -> Self {
+        self.contentEdgeInsets = contentEdgeInsets
+        return self
+    }
+    
+    func attributedTitle(title: NSAttributedString?, forState state: ASControlState) -> Self {
+        setAttributedTitle(title, forState: state)
+        return self
+    }
+    
+    func title(title: String, font:UIFont, color: UIColor, forState state: ASControlState) -> Self {
+        setTitle(title, withFont: font, withColor: color, forState: state)
+        return self
+    }
+    
+    func title(title: String, fontSize:CGFloat, hexColor: NSInteger, forState state: ASControlState) -> Self {
+        return self.title(title, font: UIFont.systemFontOfSize(fontSize), color: UIColor.hexColor(hexColor), forState: state)
+    }
+    
+    func title(title: String, font:UIFont, hexColor: NSInteger, forState state: ASControlState) -> Self {
+        return self.title(title, font: font, color: UIColor.hexColor(hexColor), forState: state)
+    }
+    
+    func image(image: UIImage?, forState state: ASControlState) -> Self {
+        setImage(image, forState: state)
+        return self
+    }
+    
+    func imageNamed(named: String?, forState state: ASControlState) -> Self {
+        guard named != nil else {
+            return image(nil, forState: state)
+        }
+        return image(UIImage(named: named!), forState: state)
+    }
+    
+    func backgroundImage(image: UIImage?, forState state: ASControlState) -> Self {
+        setBackgroundImage(image, forState: state)
+        return self
+    }
+    
+    func backgroundImageNamed(named: String?, forState state: ASControlState) -> Self {
+        guard named != nil else {
+            return backgroundImage(nil, forState: state)
+        }
+        return backgroundImage(UIImage(named: named!), forState: state)
     }
 }

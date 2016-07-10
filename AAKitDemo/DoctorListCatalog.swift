@@ -35,7 +35,7 @@ class DoctorListLayout {
             .maximumNumberOfLines(2)
         
         btnNode.styleBlock { (btn) in
-            btn.aa_config(font: UIFont.systemFontOfSize(14), hexColor: 0xff0000, title: "hello")
+            btn.aa_title("hello", font: UIFont.systemFontOfSize(14), hexColor: 0xff0000)
                .aa_border(width: 1, hexColor: 0x00ff00, cornerRadius: 4)
         }
         
@@ -153,7 +153,7 @@ class ASNodeObject: AATableObject {
     
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
         if layout == nil {
-            let sizeRange = ASSizeRangeMake(CGSizeZero, CGSizeMake(tableView.width, CGFloat.max))
+            let sizeRange = ASSizeRangeMake(CGSizeMake(tableView.width, 0), CGSizeMake(tableView.width, CGFloat.max))
             layout = rootNode.measureWithSizeRange(sizeRange)
             rootNode.layout()
             cellHeight = rootNode.calculatedSize.height            
