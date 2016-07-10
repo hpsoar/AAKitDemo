@@ -95,7 +95,7 @@ class ASDoctorInfoNode : ASDisplayNode {
     
     let btn: ASButtonNode = ASButtonNode()
     
-    let dumb: ASCustomNode = ASCustomNode()
+    let dumb: ASDisplayNode = ASDisplayNode()
     
     let line = ASDisplayNode(viewBlock: { () -> UIView in
         return UIView().aa_backgroundHexColor(0xcccccc)
