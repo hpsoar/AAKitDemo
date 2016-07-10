@@ -68,9 +68,9 @@ class ASDoctorInfoCellNode: ASCellNode {
         node = ASDoctorInfoNode(doctor: doctor)
         super.init()
         
-        for n in node.subnodes {
-            addSubnode(n)
-        }
+        // automatically add nodes referrenced in layoutSpec
+        // http://asyncdisplaykit.org/docs/implicit-hierarchy-mgmt.html
+        self.usesImplicitHierarchyManagement = true
     }
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -127,17 +127,21 @@ class ASDoctorInfoNode : ASDisplayNode {
             .userInteractionEnabled(true)
             .addTarget(self, action: #selector(test(_:)), forControlEvents: .TouchUpInside)
         
-        addSubnodes([
-            figureNode,
-            nameNode,
-            titleNode,
-            clinicNode,
-            hospitalNode,
-            goodAtNode,
-            btn,
-            line,
-            //dumb
-            ])
+        // automatically add nodes referrenced in layoutSpec
+        // http://asyncdisplaykit.org/docs/implicit-hierarchy-mgmt.html
+        self.usesImplicitHierarchyManagement = true
+        
+//        addSubnodes([
+//            figureNode,
+//            nameNode,
+//            titleNode,
+//            clinicNode,
+//            hospitalNode,
+//            goodAtNode,
+//            btn,
+//            line,
+//            //dumb
+//            ])
         
         displaysAsynchronously(true)
     }
