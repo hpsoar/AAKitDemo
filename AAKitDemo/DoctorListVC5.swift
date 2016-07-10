@@ -135,7 +135,8 @@ class ASDoctorInfoNode : ASDisplayNode {
             hospitalNode,
             goodAtNode,
             btn,
-            line
+            line,
+            //dumb
             ])
         
         displaysAsynchronously(true)
