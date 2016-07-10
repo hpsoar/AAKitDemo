@@ -129,27 +129,34 @@ class ASDoctorInfoNode : ASDisplayNode {
         //displaysAsynchronously(true)
     }
     
-    
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return [
-            [
-                figureNode.asInsets(UIEdgeInsetsMake(5, 0, 0, 10)),
-                [
-                    [   nameNode,
-                        titleNode.flexGrow(true),
-                        btn
-                    ].asHStack().spacing(5).alignItems(.End),
+        return asd_vStack().alignItems(.Stretch).spacing(5).children([
+            asd_insets(top: 10, left: 10, bottom: 10, right: 10).child(
+                asd_hStack().children([
+                    asd_insets(top: 5, left: 0, bottom: 0, right: 10).child(
+                        figureNode
+                    ),
+                    // or
+                    // figureNode.asInsets(top: 5, left: 0, bottom: 0, right: 10),
                     
-                    [clinicNode, hospitalNode].asHStack().alignItems(.End).spacing(5),
-                    
-                    goodAtNode as ASLayoutable,
-                ].asVStack().alignItems(.Stretch).spacing(5).flexShrink(true).flexGrow(true)
-            ].asHStack().asInsets(UIEdgeInsetsMake(10, 10, 10, 10)),
-            
+                    asd_vStack().alignItems(.Stretch).spacing(5).flexGrow(true).flexShrink(true).children([
+                        asd_hStack().spacing(5).alignItems(.End).children([
+                            nameNode,
+                            titleNode.flexGrow(true),
+                            btn
+                            ]),
+                        
+                        asd_hStack().alignItems(.End).spacing(5).children([
+                            clinicNode,
+                            hospitalNode
+                            ]),
+                        goodAtNode,
+                        ])
+                    ])
+            ),
             ASDisplayNode(viewBlock: { () -> UIView in
                 return UIView().aa_backgroundHexColor(0xcccccc)
             }) as ASLayoutable
-            
-            ].asVStack().alignItems(.Stretch).spacing(5)
+            ])
     }
 }

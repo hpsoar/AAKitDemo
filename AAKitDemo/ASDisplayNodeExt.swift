@@ -342,18 +342,31 @@ extension ASLayoutable {
     func asInsets(insets: UIEdgeInsets) -> ASInsetLayoutSpec {
         return ASInsetLayoutSpec(insets: insets, child: self)
     }
+    
+    func asInsets(top top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) -> ASInsetLayoutSpec {
+        return asInsets(UIEdgeInsetsMake(top, left, bottom, right))
+    }
 }
 
 extension ASInsetLayoutSpec {
     convenience init(child:ASLayoutable) {
         self.init()
-        self.setChild(child)
+        setChild(child)
     }
     
     func insets(insets: UIEdgeInsets) -> Self {
         self.insets = insets
         return self
     }
+    
+    func child(child: ASLayoutable) -> Self {
+        setChild(child)
+        return self
+    }
+}
+
+func asd_insets(top top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) -> ASInsetLayoutSpec {
+    return ASInsetLayoutSpec().insets(UIEdgeInsetsMake(top, left, bottom, right))
 }
 
 extension ASStackLayoutSpec {
@@ -427,6 +440,22 @@ class ASHStackLayoutSpec: ASStackLayoutSpec {
         self.alignItems = alignItems
         self.setChildren(children)
     }
+}
+
+func asd_hStack(children: [ASLayoutable]) -> ASStackLayoutSpec {
+    return ASHStackLayoutSpec(children: children)
+}
+
+func asd_vStack(children: [ASLayoutable]) -> ASStackLayoutSpec {
+    return ASVStackLayoutSpec(children: children)
+}
+
+func asd_hStack() -> ASStackLayoutSpec {
+    return asd_hStack([])
+}
+
+func asd_vStack() -> ASStackLayoutSpec {
+    return asd_vStack([])
 }
 
 extension Array where Element:ASLayoutable {
