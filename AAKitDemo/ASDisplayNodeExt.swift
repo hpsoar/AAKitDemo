@@ -12,7 +12,8 @@ import ObjectiveC
 extension ASDisplayNode {
     
     func asd_layout(sizeRange sizeRange: ASSizeRange) -> ASLayout {
-        let layout = measureWithSizeRange(sizeRange)        
+        let layout = measureWithSizeRange(sizeRange)
+        self.layout()
         self.frame = CGRectMake(0, 0, self.calculatedSize.width, self.calculatedSize.height)
         return layout
     }
