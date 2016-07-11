@@ -14,9 +14,15 @@ var data = [
     'Three',
 ]
 
+console.log(AANavigator);
+
 class ModalWithNavigator extends React.Component{
     _handleButton() {
-      AANavigator.dismissController(null, true, null);
+    console.log(AANavigator);
+    console.log(AANavigator.dismissController);
+      AANavigator.dismissController({callback: function(obj) {}}, true, function(obj) {
+        console.log(obj);
+      });
     }
 
     _handleRowPress() {
