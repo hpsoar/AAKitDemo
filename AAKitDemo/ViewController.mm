@@ -86,7 +86,7 @@
     //[self.navigationController pushViewController:vc animated:YES];
     
     RNViewController *vc = [[RNViewController alloc] initWithModule:@"ModalWithNavigator" parameters:nil];
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

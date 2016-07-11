@@ -101,7 +101,7 @@ RCT_EXPORT_METHOD(pushController:(NSDictionary *)context animated:(BOOL)animated
 RCT_EXPORT_METHOD(dismissController:(NSDictionary *)context animated:(BOOL)animated completion:(RCTResponseSenderBlock)completion) {
     [[self topVC] dismissViewControllerAnimated:animated completion:^{
         if (completion) {
-            completion(nil);
+            completion(@[]);
         }
     }];
 }
