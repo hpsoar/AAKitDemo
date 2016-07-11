@@ -30,6 +30,8 @@
 		<dict>
 			<key>imgur</key>
 			<string>i.imgur.com</string>
+			<key>localhost</key>
+			<string>localhost</string>
 		</dict>
 	</dict>
 	<key>UILaunchStoryboardName</key>
