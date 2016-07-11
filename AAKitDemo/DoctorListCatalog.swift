@@ -35,7 +35,7 @@ class DoctorListLayout {
             .maximumNumberOfLines(2)
         
         btnNode.styleBlock { (btn) in
-            btn.aa_config(font: UIFont.systemFontOfSize(14), hexColor: 0xff0000, title: "hello")
+            btn.aa_title("hello", font: UIFont.systemFontOfSize(14), hexColor: 0xff0000)
                .aa_border(width: 1, hexColor: 0x00ff00, cornerRadius: 4)
         }
         
@@ -87,58 +87,104 @@ class DoctorListItem: AATableObject {
         return DoctorListItemCell.self
     }
     
-    
 /// MARK - layout
     var layout: DoctorListLayout!
+    var lastSize = CGSizeZero
 
     override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
-        //let doctorListItem = item as! DoctorListItem
-        let doctor = (item as! DoctorListItem).doctor
-        layout = DoctorListLayout(doctor: doctor)
+        if layout == nil || lastSize.width != tableView.width {
+            let doctor = (item as! DoctorListItem).doctor
         
-        let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
-        layout.layoutIfNeeded(contrainedSize)
-        cellHeight = layout.rootNode.size.height
+            layout = DoctorListLayout(doctor: doctor)
+        
+            let contrainedSize = AASizeRange(max: CGSizeMake(tableView.width, CGFloat.max))
+            layout.layoutIfNeeded(contrainedSize)
+            cellHeight = layout.rootNode.size.height
+            
+            lastSize = tableView.size
+        }
     }
 }
 
 class DoctorListItemCell : AATableCell {
-    let nameLabel = NIAttributedLabel()
-    let titleLabel = NIAttributedLabel()
-    let clinicLabel = NIAttributedLabel()
-    let hospitalLabel = NIAttributedLabel()
-    let goodAtLabel = NIAttributedLabel()
-    let btn = UIButton()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.aa_addSubviews([
-            nameLabel,
-            titleLabel,
-            clinicLabel,
-            hospitalLabel,
-            goodAtLabel,
-            btn
-            ])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
         super.shouldUpdateCellWithObject(object)
         
         let item = object as! DoctorListItem
-        
-        item.layout.nameNode.setup(nameLabel)
-        item.layout.titleNode.setup(titleLabel)
-        item.layout.clinicNode.setup(clinicLabel)
-        item.layout.hospitalNode.setup(hospitalLabel)
-        item.layout.goodAtNode.setup(goodAtLabel)
-        item.layout.btnNode.setup(btn)
+        item.layout.rootNode.mountOnView(contentView)
         
         return true
+    }
+    
+    override func prepareForReuse() {
+        contentView.aa_removeAllSubviews()
+    }
+}
+
+class DoctorListItem2: ASNodeObject {
+    let doctor : DoctorModel!
+    
+    class func itemsWithDoctors(doctors: NSArray) -> NSArray {
+        return doctors.aa_map({ (obj, idx) -> AnyObject? in
+            return DoctorListItem2(doctor: obj as! DoctorModel)
+        })
+    }
+    
+    init(doctor: DoctorModel!) {
+        self.doctor = doctor
+        super.init(rootNode: ASDoctorInfoNode(doctor: doctor))
+        //rootNode.displaysAsynchronously = false
+    }
+}
+
+//class DoctorListItem2Cell: ASNodeCell {
+//    let v = UIView().aa_backgroundHexColor(0xff0000)
+//    
+//    override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
+//        super.shouldUpdateCellWithObject(object)
+//        
+//        let item = object as! DoctorListItem2
+//        let node = item.rootNode as! ASDoctorInfoNode
+//        v.frame =
+//        contentView.addSubview(v)
+//        
+//        return true
+//    }
+//}
+
+class ASNodeObject: AATableObject {
+    override func cellClass() -> AnyClass! {
+        return ASNodeCell.self
+    }
+    
+    init(rootNode: ASDisplayNode) {
+        self.rootNode = rootNode
+        super.init()
+    }
+    
+    var layout: ASLayout!
+    var rootNode: ASDisplayNode
+    
+    override func layoutForItem(item: AnyObject!, indexPath: NSIndexPath!, tableView: UITableView!) {
+        if layout == nil {
+            layout = rootNode.asd_layout(width: tableView.width)            
+            cellHeight = rootNode.calculatedSize.height            
+        }
+    }
+
+}
+
+class ASNodeCell: AATableCell {
+    override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
+        super.shouldUpdateCellWithObject(object)
+        
+        let item = object as! ASNodeObject
+        contentView.addSubnode(item.rootNode)
+        
+        return true
+    }
+    
+    override func prepareForReuse() {
+        contentView.aa_removeAllSubviews()
     }
 }

@@ -20,7 +20,7 @@ class DoctorListVC4 : NITableVC {
         
         refreshController.enableHeaderRefresh()
         
-        modelRefresher.refresh(.Top)                
+        modelRefresher.refresh(.Top)
     }
     
     override func refresher(refresher: AAModelRefresher!, didFinishLoadWithType type: ModelRefreshType, result: AAModelResult!) {
@@ -30,7 +30,7 @@ class DoctorListVC4 : NITableVC {
         else {
             let doctors = result.model as! [AnyObject!]
             
-            let items = DoctorListItem.itemsWithDoctors(doctors)  as [AnyObject]
+            let items = DoctorListItem2.itemsWithDoctors(doctors)  as [AnyObject]
             
             if doctorListOptions.page == 0 {
                 modelViewUpdater.reloadWithObjects(items)
@@ -46,4 +46,10 @@ class DoctorListVC4 : NITableVC {
             refreshController.enableFooterRefresh()
         }
     }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        tableView.reloadData()
+    }
+    //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+
 }

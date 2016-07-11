@@ -69,6 +69,9 @@ class AAUINode {
     
     var styleBlock : AAUINodeStyleBlock?
     
+    var viewClass: AnyClass? = nil
+    var viewBlock: (Void -> UIView)? = nil
+    
     var sizeRange = AASizeRange()
     
     func sizeRange(sizeRange: AASizeRange) -> Self {
@@ -81,19 +84,6 @@ class AAUINode {
     func size(size: CGSize) -> Self {
         self.size = size
         return self
-    }
-    
-    func styleBlock(styleBlock: AAUINodeStyleBlock) -> Self {
-        self.styleBlock = styleBlock
-        return self
-    }
-    
-    func setup(view: UIView) {
-        view.frame = frame
-        view.hidden = hidden
-        if let block = self.styleBlock {
-            block(view)
-        }
     }
     
     func layoutIfNeeded(constrainedSize: AASizeRange) -> Void {
@@ -109,6 +99,36 @@ class AAUINode {
     
     func calculateFrameIfNeeded() -> Void {
         frame = CGRectMake(position.x, position.y, size.width, size.height)
+    }
+    
+    /// MARK: - view
+    
+    func createView() -> UIView? {
+        if let cls = viewClass as? UIView.Type {
+            let view =  cls.init()
+            return view
+        }
+        
+        return nil
+    }
+    
+    func mountOnView(view: UIView) {
+        if let v = createView() {
+            setup(v)
+            view.addSubview(v)
+        }
+    }
+    func styleBlock(styleBlock: AAUINodeStyleBlock) -> Self {
+        self.styleBlock = styleBlock
+        return self
+    }
+    
+    func setup(view: UIView) {
+        view.frame = frame
+        view.hidden = hidden
+        if let block = self.styleBlock {
+            block(view)
+        }
     }
 }
 
@@ -249,46 +269,6 @@ class AAStackNode: AAUINode {
     /// if there are flexGrow children, the maximum stack dimension will be filled up
     /// eg. [a flex grow label] push a button right align in the stack
     var fillStackOnGrow = true
-    
-    func config(block: (AAStackNode) -> Void) -> Self {
-        block(self)
-        return self
-    }
-    
-    func config(spacing spacing: CGFloat, alignItems: AAStackNodeAlignment) -> Self {
-        return self.spacing(spacing).alignItems(alignItems)
-    }
-    
-    func direction(direction: AAStackNodeDirection) -> Self {
-        self.direction = direction
-        return self
-    }
-    
-    func spacing(spacing: CGFloat) -> Self {
-        self.spacing = spacing
-        return self
-    }
-    
-    func alignItems(alignItems: AAStackNodeAlignment) -> Self {
-        self.alignItems = alignItems
-        return self
-    }
-    
-    func children(children: [AAStackNodeChild]) -> Self {
-        self.children = children
-        return self
-    }
-    
-    func child(child: AAStackNodeChild) -> Self {
-        self.children.append(child)
-        return self
-    }
-    
-    func append(node: AAUINode) -> AAStackNodeChild {
-        let child = AAStackNodeChild().node(node)
-        self.children.append(child)
-        return child
-    }
     
     /// MARK: - calculate layout
     
@@ -451,6 +431,55 @@ class AAStackNode: AAUINode {
         }
         return dim
     }
+    
+    override func mountOnView(view: UIView) {
+        super.mountOnView(view)
+        for c in children {
+            c.node.mountOnView(view)
+        }
+    }
+}
+
+extension AAStackNode {
+    func config(block: (AAStackNode) -> Void) -> Self {
+        block(self)
+        return self
+    }
+    
+    func config(spacing spacing: CGFloat, alignItems: AAStackNodeAlignment) -> Self {
+        return self.spacing(spacing).alignItems(alignItems)
+    }
+    
+    func direction(direction: AAStackNodeDirection) -> Self {
+        self.direction = direction
+        return self
+    }
+    
+    func spacing(spacing: CGFloat) -> Self {
+        self.spacing = spacing
+        return self
+    }
+    
+    func alignItems(alignItems: AAStackNodeAlignment) -> Self {
+        self.alignItems = alignItems
+        return self
+    }
+    
+    func children(children: [AAStackNodeChild]) -> Self {
+        self.children = children
+        return self
+    }
+    
+    func child(child: AAStackNodeChild) -> Self {
+        self.children.append(child)
+        return self
+    }
+    
+    func append(node: AAUINode) -> AAStackNodeChild {
+        let child = AAStackNodeChild().node(node)
+        self.children.append(child)
+        return child
+    }
 }
 
 class AAHorizontalStackNode : AAStackNode {
@@ -497,7 +526,7 @@ class AAStaticNode : AAStackNode {
 /// MARK: - inset node
 
 class AAInsetNode: AAUINode {
-    var child : AAUINode?
+    var child : AAUINode!
     var insets = UIEdgeInsetsZero
         
     init(insets: UIEdgeInsets) {
@@ -520,17 +549,23 @@ class AAInsetNode: AAUINode {
         
         let sizeRange = AASizeRange(max: maxSize.aa_insets(insets.aa_negate()).aa_nonnegative())
         
-        child!.calculateSizeIfNeeded(sizeRange)
-        size = child!.size.aa_insets(insets)
+        child.calculateSizeIfNeeded(sizeRange)
+        size = child.size.aa_insets(insets)
     }
     
     override func calculateFrameIfNeeded() {
         super.calculateFrameIfNeeded()
         
-        child!.position.x = position.x + insets.left
-        child!.position.y = position.y + insets.top
+        child.position.x = position.x + insets.left
+        child.position.y = position.y + insets.top
         
-        child!.calculateFrameIfNeeded()
+        child.calculateFrameIfNeeded()
+    }
+    
+    override func mountOnView(view: UIView) {
+        super.mountOnView(view)
+        
+        child.mountOnView(view)
     }
 }
 
@@ -550,7 +585,10 @@ class AALabelAttributes {
     var text: String? = nil
     var attributedText: NSAttributedString? {
         get {
-            return _attributedText != nil ? _attributedText : buildAttributedString(text)
+            if _attributedText == nil {
+                _attributedText = buildAttributedString(text)
+            }
+            return _attributedText
         }
         set {
             _attributedText = newValue
@@ -627,6 +665,20 @@ class AALabelAttributes {
 }
 
 extension AALabelAttributes {
+    convenience init(font: UIFont, hexColor: NSInteger, text: String?) {
+        self.init()
+        self.font = font
+        self.hexColor = hexColor
+        self.text = text
+    }
+    
+    convenience init(fontSize: CGFloat, hexColor: NSInteger, text: String?) {
+        self.init()
+        self.fontSize = fontSize
+        self.hexColor = hexColor
+        self.text = text
+    }
+    
     func text(text: String?) -> Self {
         self.text = text
         return self
@@ -724,6 +776,11 @@ class AALabelNode: AAUINode {
     
     var config = AALabelAttributes()
     
+    override init() {
+        super.init()
+        viewClass = NIAttributedLabel.self
+    }
+    
     override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
         let maxSize = self.sizeRange.max.aa_min(constrainedSize.max)
         
@@ -759,6 +816,10 @@ extension AALabelNode {
 /// MARK: - label node work for UILabel & its subclasses due to size calculator
 
 class AAUILabelNode : AALabelNode {
+    override init() {
+        super.init()
+        viewClass = UILabel.self
+    }
     override func calculateSizeIfNeeded(constrainedSize: AASizeRange) {
         struct Sizer {
             static let sizeLabel = UILabel()
@@ -783,8 +844,9 @@ class AAButtonNode : AAUINode {
     
     init(preferredSize: CGSize) {
         super.init()
-        self.preferredSize = preferredSize
+        viewClass = UIButton.self
         sizeRange = AASizeRange(min: preferredSize, max: preferredSize)
+        self.preferredSize = preferredSize
     }
     
     override func styleBlock(styleBlock: UIButton ->Void ) -> Self {
