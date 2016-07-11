@@ -9,3 +9,6 @@
 #import "DoctorModel.h"
 #import <NIAttributedLabel.h>
 #import <RCTRootView.h>
+#import <RCCManager.h>
+#import <RCTBridgeModule.h>
+#import "RNBridgeManager.h"

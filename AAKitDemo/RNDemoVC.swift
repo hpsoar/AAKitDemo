@@ -12,6 +12,7 @@ class RNDemoVC: UIViewController {
     
     override func loadView() {
         NSLog("Hello")
+        
         let jsCodeLocation = NSURL(string: "http://localhost:8081/index.ios.bundle?platform=ios")
         let mockData:NSDictionary = ["scores":
             [

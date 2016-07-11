@@ -12,6 +12,7 @@
 #import "TestCollectionVC.h"
 #import "DoctorListVC2.h"
 #import "AAKitDemo-Swift.h"
+#import "RNViewController.h"
 
 @interface ViewController ()
 
@@ -81,8 +82,11 @@
 }
 
 - (void)RNDemo:(id)sender {
-    RNDemoVC *vc = [RNDemoVC new];
-    [self.navigationController pushViewController:vc animated:YES];
+    //RNDemoVC *vc = [RNDemoVC new];
+    //[self.navigationController pushViewController:vc animated:YES];
+    
+    RNViewController *vc = [[RNViewController alloc] initWithModule:@"ModalWithNavigator" parameters:nil];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
