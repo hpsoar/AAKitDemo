@@ -81,6 +81,11 @@ static id<AANavigatorViewControllerFactory> navigatorControllerFactory = nil;
 
 RCT_EXPORT_MODULE()
 
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
+}
+
 // This is an exported method that is available in JS.
 RCT_EXPORT_METHOD(popController:(NSDictionary *)context animated:(BOOL)animated completion:(RCTResponseSenderBlock)completion) {
     [[self topVC].navigationController popViewControllerAnimated:YES];
@@ -105,7 +110,7 @@ RCT_EXPORT_METHOD(presentController:(NSDictionary *)context animated:(BOOL)anima
     UIViewController *vc = [self controllerWithContext:context];
     if (vc) {
         [[self topVC] presentViewController:vc animated:animated completion:^{
-            
+        
         }];
     }
 }
