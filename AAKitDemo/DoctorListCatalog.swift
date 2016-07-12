@@ -137,21 +137,6 @@ class DoctorListItem2: ASNodeObject {
     }
 }
 
-//class DoctorListItem2Cell: ASNodeCell {
-//    let v = UIView().aa_backgroundHexColor(0xff0000)
-//    
-//    override func shouldUpdateCellWithObject(object: AnyObject!) -> Bool {
-//        super.shouldUpdateCellWithObject(object)
-//        
-//        let item = object as! DoctorListItem2
-//        let node = item.rootNode as! ASDoctorInfoNode
-//        v.frame =
-//        contentView.addSubview(v)
-//        
-//        return true
-//    }
-//}
-
 class ASNodeObject: AATableObject {
     override func cellClass() -> AnyClass! {
         return ASNodeCell.self
@@ -188,3 +173,5 @@ class ASNodeCell: AATableCell {
         contentView.aa_removeAllSubviews()
     }
 }
+
+

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		03FB420342BB79A722E7F15F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D2E80AB879BA562C69B0B0 /* libPods.a */; };
+		1221A5E61D34FBBA0067D893 /* ASLTableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1221A5E51D34FBBA0067D893 /* ASLTableObject.swift */; };
+		1221A5E81D3506FE0067D893 /* DoctorListVC6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1221A5E71D3506FE0067D893 /* DoctorListVC6.swift */; };
 		125F66E11D33D333002035A1 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 125F66E01D33D2EC002035A1 /* libReactNativeControllers.a */; };
 		125F66E71D33EC8A002035A1 /* RNNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66E61D33EC8A002035A1 /* RNNavigator.m */; };
 		125F66EA1D33F2AE002035A1 /* RNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66E91D33F2AE002035A1 /* RNBridgeManager.m */; };
@@ -84,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1221A5E51D34FBBA0067D893 /* ASLTableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASLTableObject.swift; sourceTree = "<group>"; };
+		1221A5E71D3506FE0067D893 /* DoctorListVC6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorListVC6.swift; sourceTree = "<group>"; };
 		1223988E1D2F780500E030E4 /* AAKitDemo-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AAKitDemo-Prefix.h"; sourceTree = SOURCE_ROOT; };
 		125F66DB1D33D2EC002035A1 /* ReactNativeControllers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeControllers.xcodeproj; path = "../node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj"; sourceTree = "<group>"; };
 		125F66E51D33EC8A002035A1 /* RNNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNavigator.h; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 				12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */,
 				12F612601D316B8E0081D6E9 /* ASDisplayNodeExt.swift */,
 				12C16DF01D33B36A00B6EEB0 /* RNDemoVC.swift */,
+				1221A5E51D34FBBA0067D893 /* ASLTableObject.swift */,
+				1221A5E71D3506FE0067D893 /* DoctorListVC6.swift */,
 			);
 			path = AAKitDemo;
 			sourceTree = "<group>";
@@ -632,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12C38E0F1D2F281300D26266 /* DoctorListVC.mm in Sources */,
+				1221A5E61D34FBBA0067D893 /* ASLTableObject.swift in Sources */,
 				12C38E131D2F281300D26266 /* DoctorModel.m in Sources */,
 				12F612611D316B8E0081D6E9 /* ASDisplayNodeExt.swift in Sources */,
 				127E34B21D2F2DE5000EB373 /* AAModelKit.m in Sources */,
@@ -672,6 +679,7 @@
 				127E34A01D2F2DE5000EB373 /* UIView_Block.swift in Sources */,
 				127E34871D2F2DE5000EB373 /* AALabelComponent.mm in Sources */,
 				125F66ED1D33F3DF002035A1 /* RNViewController.m in Sources */,
+				1221A5E81D3506FE0067D893 /* DoctorListVC6.swift in Sources */,
 				12C38E0B1D2F281300D26266 /* AANode.swift in Sources */,
 				127E34B81D2F2DE5000EB373 /* NIModelUpdater.m in Sources */,
 				12C38E151D2F281300D26266 /* TestCollectionVC.m in Sources */,

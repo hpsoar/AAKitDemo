@@ -32,6 +32,7 @@
     [self.view addSubview:[self btnWithTitle:@"ni table" sel:@selector(niTableVCDemo:)]];
     [self.view addSubview:[self btnWithTitle:@"asyncdisplay kit" sel:@selector(asyncDisplayDemo:)]];
     [self.view addSubview:[self btnWithTitle:@"as tableview" sel:@selector(asTableViewDemo:)]];
+    [self.view addSubview:[self btnWithTitle:@"custom as node" sel:@selector(customASNode:)]];
     [self.view addSubview:[self btnWithTitle:@"RN demo" sel:@selector(RNDemo:)]];
 }
 
@@ -78,6 +79,11 @@
 
 - (void)asTableViewDemo:(id)sender {
     DoctorListVC5 *vc = [DoctorListVC5 new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)customASNode:(id)sender {
+    DoctorListVC6 *vc = [DoctorListVC6 new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
