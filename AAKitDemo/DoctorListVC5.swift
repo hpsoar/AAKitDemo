@@ -131,19 +131,19 @@ class ASDoctorInfoNode : ASDisplayNode {
         // http://asyncdisplaykit.org/docs/implicit-hierarchy-mgmt.html
         self.usesImplicitHierarchyManagement = true
         
-//        addSubnodes([
-//            figureNode,
-//            nameNode,
-//            titleNode,
-//            clinicNode,
-//            hospitalNode,
-//            goodAtNode,
-//            btn,
-//            line,
-//            //dumb
-//            ])
+        addSubnodes([
+            figureNode,
+            nameNode,
+            titleNode,
+            clinicNode,
+            hospitalNode,
+            goodAtNode,
+            btn,
+            line,
+            //dumb
+            ])
         
-        displaysAsynchronously(true)
+        displaysAsynchronously(false)
     }
     
     func test(sender: AnyObject) {

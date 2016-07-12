@@ -10,9 +10,7 @@ import UIKit
 
 extension ASDisplayNode {
     func bind(v: UIView) -> Self {
-        //if let layoutable = self.calculatedLayout?.layoutableObject as ASDisplayNode {
-            v.frame = self.frame
-        //}
+        v.frame = self.frame
         return self
     }
 }
@@ -54,16 +52,13 @@ class ASLabelNode : ASDisplayNode {
 class DoctorListItem3: AATableObject {
     class func itemsWithDoctors(doctors: NSArray) -> NSArray {
         return doctors.aa_map({ (obj, idx) -> AnyObject? in
-            return DoctorListItem3(doctor: obj as! DoctorModel)
+            let item = DoctorListItem3()
+            item.doctor = obj as! DoctorModel
+            return item
         })
     }
     
-    let doctor: DoctorModel
-    
-    init(doctor: DoctorModel) {
-        self.doctor = doctor
-        super.init()
-    }
+    var doctor: DoctorModel!
     
     override func cellClass() -> AnyClass! {
         return DoctorListItemCell3.self
