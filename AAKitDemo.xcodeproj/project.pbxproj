@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		03FB420342BB79A722E7F15F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D2E80AB879BA562C69B0B0 /* libPods.a */; };
 		125F66E11D33D333002035A1 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 125F66E01D33D2EC002035A1 /* libReactNativeControllers.a */; };
-		125F66E71D33EC8A002035A1 /* AANavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66E61D33EC8A002035A1 /* AANavigator.m */; };
+		125F66E71D33EC8A002035A1 /* RNNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66E61D33EC8A002035A1 /* RNNavigator.m */; };
 		125F66EA1D33F2AE002035A1 /* RNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66E91D33F2AE002035A1 /* RNBridgeManager.m */; };
 		125F66ED1D33F3DF002035A1 /* RNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 125F66EC1D33F3DF002035A1 /* RNViewController.m */; };
 		127E34851D2F2DE5000EB373 /* AAComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 127E34151D2F2DE5000EB373 /* AAComponent.mm */; };
@@ -86,8 +86,8 @@
 /* Begin PBXFileReference section */
 		1223988E1D2F780500E030E4 /* AAKitDemo-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AAKitDemo-Prefix.h"; sourceTree = SOURCE_ROOT; };
 		125F66DB1D33D2EC002035A1 /* ReactNativeControllers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeControllers.xcodeproj; path = "../node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj"; sourceTree = "<group>"; };
-		125F66E51D33EC8A002035A1 /* AANavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AANavigator.h; sourceTree = "<group>"; };
-		125F66E61D33EC8A002035A1 /* AANavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AANavigator.m; sourceTree = "<group>"; };
+		125F66E51D33EC8A002035A1 /* RNNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNavigator.h; sourceTree = "<group>"; };
+		125F66E61D33EC8A002035A1 /* RNNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNavigator.m; sourceTree = "<group>"; };
 		125F66E81D33F2AE002035A1 /* RNBridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBridgeManager.h; sourceTree = "<group>"; };
 		125F66E91D33F2AE002035A1 /* RNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBridgeManager.m; sourceTree = "<group>"; };
 		125F66EB1D33F3DF002035A1 /* RNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNViewController.h; sourceTree = "<group>"; };
@@ -216,8 +216,8 @@
 		125F66E21D33EAD8002035A1 /* RNExt */ = {
 			isa = PBXGroup;
 			children = (
-				125F66E51D33EC8A002035A1 /* AANavigator.h */,
-				125F66E61D33EC8A002035A1 /* AANavigator.m */,
+				125F66E51D33EC8A002035A1 /* RNNavigator.h */,
+				125F66E61D33EC8A002035A1 /* RNNavigator.m */,
 				125F66E81D33F2AE002035A1 /* RNBridgeManager.h */,
 				125F66E91D33F2AE002035A1 /* RNBridgeManager.m */,
 				125F66EB1D33F3DF002035A1 /* RNViewController.h */,
@@ -653,7 +653,7 @@
 				127E348C1D2F2DE5000EB373 /* CKTableViewUpdater.mm in Sources */,
 				12C38DC61D2F256900D26266 /* AppDelegate.swift in Sources */,
 				127E34A11D2F2DE5000EB373 /* UIView_Builder.swift in Sources */,
-				125F66E71D33EC8A002035A1 /* AANavigator.m in Sources */,
+				125F66E71D33EC8A002035A1 /* RNNavigator.m in Sources */,
 				127E348A1D2F2DE5000EB373 /* CKComponent+HostingView.mm in Sources */,
 				127E349C1D2F2DE5000EB373 /* Color_AAKit.swift in Sources */,
 				127E34B71D2F2DE5000EB373 /* AATableObjectCatalog.m in Sources */,

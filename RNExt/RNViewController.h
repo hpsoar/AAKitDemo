@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RNNavigator.h"
 
 @interface RNViewController : UIViewController
 
 - (instancetype)initWithModule:(NSString *)moduleName parameters:(NSDictionary *)parameters;
+
+- (instancetype)initWithContext:(RNNavigationContext *)context;
 
 @end

@@ -82,11 +82,14 @@
 }
 
 - (void)RNDemo:(id)sender {
-    //RNDemoVC *vc = [RNDemoVC new];
-    //[self.navigationController pushViewController:vc animated:YES];
+    RNNavigationContext *context = [RNNavigationContext new];
+    context.component = @"ModalWithNavigator";
+    context.style = [RNNavigationStyle new];
+    context.style.hideNavigationBar = YES;
+    context.style.hideNavigationBarAnimated = NO;
     
-    RNViewController *vc = [[RNViewController alloc] initWithModule:@"ModalWithNavigator" parameters:nil];
-    [self presentViewController:vc animated:YES completion:nil];
+    RNViewController *vc = [[RNViewController alloc] initWithContext:context];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

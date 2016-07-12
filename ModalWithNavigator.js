@@ -6,23 +6,34 @@ import { StyleSheet, View, Text, NavigatorIOS, NativeModules, } from "react-nati
 
 var SimpleList = require('./SimpleList');
 var SimpleView = require('./SimpleView');
-var AANavigator = NativeModules.AANavigator;
+var RNNavigator = NativeModules.RNNavigator;
 
 var data = [
-    'One',
+    'react-native push',
     'Two',
     'Three',
 ]
 
-console.log(AANavigator);
+console.log(RNNavigator);
 
 class ModalWithNavigator extends React.Component{
     _handleButton() {
-    console.log(AANavigator);
-    console.log(AANavigator.dismissController);
-      AANavigator.dismissController({callback: function(obj) {}}, true, function(obj) {
-        console.log(obj);
+      console.log(RNNavigator);
+      console.log(RNNavigator.dismissController);
+      RNNavigator.pop(true, function() {
+        console.log("hello");
       });
+    }
+
+    _next() {
+      RNNavigator.push({
+        title: 'hello',
+        component: 'ModalWithNavigator',
+        style: {
+          hideNavigationBar: true,
+          hideNavigationBarAnimated: false,
+        }
+      }, true, function() { });
     }
 
     _handleRowPress() {
@@ -38,7 +49,7 @@ class ModalWithNavigator extends React.Component{
                 ref="navigator"
                 style={styles.container}
                 initialRoute={{
-                    title: 'Modal with Navigator',
+                    title: 'Navigator',
                     component: SimpleList,
                     passProps: {
                         data: data,
@@ -46,7 +57,8 @@ class ModalWithNavigator extends React.Component{
                     },
                     leftButtonTitle: 'Close',
                     onLeftButtonPress: this._handleButton.bind(this),
-                    rightButtonTitle: 'OK',
+                    rightButtonTitle: 'RNNavigagor.push',
+                    onRightButtonPress: this._next.bind(this),
                 }}
             />
         );
