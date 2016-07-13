@@ -12,3 +12,4 @@
 #import <RCCManager.h>
 #import <RCTBridgeModule.h>
 #import "RNBridgeManager.h"
+#import "RNNavigator.h"

@@ -63,4 +63,6 @@
 
 + (void)setViewControllerFactory:(id<RNViewControllerFactory>)controlerFactory;
 
++ (void)setRTCBridge:(RCTBridge *)bridge;
+
 @end

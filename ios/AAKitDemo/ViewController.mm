@@ -94,7 +94,7 @@
     context.style.hideNavigationBar = YES;
     context.style.hideNavigationBarAnimated = NO;
     
-    RNViewController *vc = [[RNViewController alloc] initWithContext:context];
+    RNViewController *vc = [[RNViewController alloc] initWithContext:context bridge:[RNBridgeManager sharedManager].bridge];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

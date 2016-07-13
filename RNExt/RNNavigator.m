@@ -53,6 +53,11 @@
     
 }
 
+static RCTBridge *rctBridge = nil;
++ (void)setRTCBridge:(RCTBridge *)bridge {
+    rctBridge = bridge;
+}
+
 static id<RNViewControllerFinder> navigatorTopViewControllerFinder = nil;
 
 + (void)setTopViewControllerFinder:(id<RNViewControllerFinder>)topViewControllerFinder {
@@ -95,7 +100,8 @@ static id<RNViewControllerFactory> navigatorControllerFactory = nil;
     }
     else {
         if (naviContext.component) {
-            return [[RNViewController alloc] initWithContext:naviContext];
+            NSAssert(rctBridge, @"please call [RNNavigator setRCTBridge]");
+            return [[RNViewController alloc] initWithContext:naviContext bridge:rctBridge];
         }
         return nil;
     }

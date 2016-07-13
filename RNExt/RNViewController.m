@@ -14,23 +14,21 @@
 @property (nonatomic) BOOL navigationBarWasHidden;
 @property (nonatomic, strong) RNNavigationStyle *naviStyle;
 @property (nonatomic, strong) RNNavigationContext *context;
+@property (nonatomic, strong) RCTRootView *rootView;
 @end
 
 @implementation RNViewController
 
-- (instancetype)initWithContext:(RNNavigationContext *)context {
+- (instancetype)initWithContext:(RNNavigationContext *)context bridge:(RCTBridge *)bridge {
     if (self = [super init]) {
         self.context = context;
         self.naviStyle = context.style;
+        
+        self.rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                 moduleName:self.context.component
+                                          initialProperties:self.context.passProps];
     }
     return self;
-}
-
-- (instancetype)initWithModule:(NSString *)moduleName parameters:(NSDictionary *)parameters {
-    RNNavigationContext *context = [RNNavigationContext new];
-    context.component = moduleName;
-    context.passProps = parameters;
-    return [self initWithContext:context];
 }
 
 - (void)viewDidLoad {
@@ -40,15 +38,11 @@
         self.title = self.context.title;
     }
     
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:[RNBridgeManager sharedManager].bridge
-                                                     moduleName:self.context.component
-                                              initialProperties:self.context.passProps];
-    
     // We want this view to take up the entire screen.
-    rootView.frame = self.view.frame;
-    rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.rootView.frame = self.view.frame;
+    self.rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
-    [self.view addSubview:rootView];
+    [self.view addSubview:self.rootView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

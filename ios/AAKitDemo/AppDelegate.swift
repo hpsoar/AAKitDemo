@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let RNHost = "http://localhost:8081"
         RNBridgeManager.sharedManager().setupWithJSHost(RNHost, launchOptions: launchOptions)
         
+        RNNavigator.setRTCBridge(RNBridgeManager.sharedManager().bridge)
+        
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = UINavigationController(rootViewController: ViewController())
         window?.makeKeyAndVisible()

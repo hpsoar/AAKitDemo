@@ -11,8 +11,6 @@
 
 @interface RNViewController : UIViewController
 
-- (instancetype)initWithModule:(NSString *)moduleName parameters:(NSDictionary *)parameters;
-
-- (instancetype)initWithContext:(RNNavigationContext *)context;
+- (instancetype)initWithContext:(RNNavigationContext *)context bridge:(RCTBridge *)bridge;
 
 @end
