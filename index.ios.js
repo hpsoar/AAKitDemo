@@ -12,9 +12,11 @@ var {
 var SimpleView = require('./SimpleView');
 var PassingData = require('./PassingData');
 var ModalWithNavigator = require('./ModalWithNavigator');
+var TestModule = require('./testModule');
 
 // Here we are exposing each component as different `modules` so that we can
 // gain access to them and starting points in our RCTRootViews.
 AppRegistry.registerComponent('SimpleView', () => SimpleView);
 AppRegistry.registerComponent('PassingData', () => PassingData);
 AppRegistry.registerComponent('ModalWithNavigator', () => ModalWithNavigator);
+AppRegistry.registerComponent('TestModule', () => TestModule);

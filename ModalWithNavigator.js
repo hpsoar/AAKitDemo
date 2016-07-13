@@ -4,6 +4,8 @@ var React = require('react');
 
 import { StyleSheet, View, Text, NavigatorIOS, NativeModules, } from "react-native"; 
 
+import { NativeAppEventEmitter } from 'react-native';
+
 var SimpleList = require('./SimpleList');
 var SimpleView = require('./SimpleView');
 var RNNavigator = NativeModules.RNNavigator;
@@ -14,12 +16,32 @@ var data = [
     'Three',
 ]
 
+console.log('hi');
 console.log(RNNavigator);
 
 class ModalWithNavigator extends React.Component{
+  constructor(props) {
+
+    super(props);
+    this.state = {subscription: false};
+  }
+  componentDidMount() {
+    console.log('mount');
+    var subscription = NativeAppEventEmitter.addListener('testEvent', function(reminder) {
+      console.log('777');
+      console.log(reminder);
+    });
+    this.setState({ subscription: subscription });
+    console.log(this.state);
+  }
+
+  componentWillUnmount() {
+    this.state.subscription.remove();
+  }
+
     _handleButton() {
+      console.log('hi');
       console.log(RNNavigator);
-      console.log(RNNavigator.dismissController);
       RNNavigator.pop(true, function() {
         console.log("hello");
       });
@@ -29,6 +51,10 @@ class ModalWithNavigator extends React.Component{
       RNNavigator.push({
         title: 'hello',
         component: 'ModalWithNavigator',
+        test: function(o) {
+          console.log('hello:');
+          console.log(o);
+        },
         style: {
           hideNavigationBar: true,
           hideNavigationBarAnimated: false,

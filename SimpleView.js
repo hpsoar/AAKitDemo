@@ -33,7 +33,8 @@ class SimpleView extends Component {
   _onPressButton() {
     RNNavigator.present({
       title: 'me, me...',      
-      component: 'PassingData',
+      component: 'TestModule',
+//      component: 'PassingData',
       passProps: { data: data },
     }, true, function() {}, function() {});
   }

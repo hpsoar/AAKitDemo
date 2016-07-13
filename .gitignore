@@ -25,3 +25,4 @@ appledoc
 Carthage/Build
 Pods
 Podfile.lock
+node_modules
