@@ -19,4 +19,4 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => [
     # Add any other subspecs you want to use in your project
   ]
 
-pod 'RNController', :path => '../node_modules/react-native-controller-bridge'
+#pod 'RNController', :path => '../node_modules/react-native-controller-bridge'

@@ -29,6 +29,7 @@
 		12C38E141D2F281300D26266 /* HostViewVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12C38E061D2F281300D26266 /* HostViewVC.mm */; };
 		12C38E151D2F281300D26266 /* TestCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C38E081D2F281300D26266 /* TestCollectionVC.m */; };
 		12C38E161D2F281300D26266 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12C38E0A1D2F281300D26266 /* ViewController.mm */; };
+		12D6438F1D365319000E75DA /* libRNControllerBridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D6438E1D3652D3000E75DA /* libRNControllerBridge.a */; };
 		12F6125B1D3023F40081D6E9 /* AANodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125A1D3023F40081D6E9 /* AANodeLabel.swift */; };
 		12F6125D1D30D8AD0081D6E9 /* ASTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125C1D30D8AD0081D6E9 /* ASTableVC.swift */; };
 		12F6125F1D30EF370081D6E9 /* DoctorListVC5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */; };
@@ -82,6 +83,13 @@
 			remoteGlobalIDString = 12C38DC11D2F256900D26266;
 			remoteInfo = AAKitDemo;
 		};
+		12D6438D1D3652D3000E75DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 12D643871D3652D3000E75DA /* RNControllerBridge.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 12F92AC21D362BE200F21E9B;
+			remoteInfo = RNControllerBridge;
+		};
 		12F92AA91D36101B00F21E9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 12F92AA51D36101B00F21E9B /* ReactNativeTestModule.xcodeproj */;
@@ -130,6 +138,7 @@
 		12C38E081D2F281300D26266 /* TestCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCollectionVC.m; sourceTree = "<group>"; };
 		12C38E091D2F281300D26266 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		12C38E0A1D2F281300D26266 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		12D643871D3652D3000E75DA /* RNControllerBridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNControllerBridge.xcodeproj; path = "../node_modules/react-native-controller-bridge/ios/RNControllerBridge.xcodeproj"; sourceTree = "<group>"; };
 		12F6125A1D3023F40081D6E9 /* AANodeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AANodeLabel.swift; sourceTree = "<group>"; };
 		12F6125C1D30D8AD0081D6E9 /* ASTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASTableVC.swift; sourceTree = "<group>"; };
 		12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorListVC5.swift; sourceTree = "<group>"; };
@@ -190,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12D6438F1D365319000E75DA /* libRNControllerBridge.a in Frameworks */,
 				12F92AAB1D36102A00F21E9B /* libReactNativeTestModule.a in Frameworks */,
 				125F66E11D33D333002035A1 /* libReactNativeControllers.a in Frameworks */,
 				03FB420342BB79A722E7F15F /* libPods.a in Frameworks */,
@@ -224,6 +234,7 @@
 		12C38DB91D2F256900D26266 = {
 			isa = PBXGroup;
 			children = (
+				12D643871D3652D3000E75DA /* RNControllerBridge.xcodeproj */,
 				12F92AA51D36101B00F21E9B /* ReactNativeTestModule.xcodeproj */,
 				125F66DB1D33D2EC002035A1 /* ReactNativeControllers.xcodeproj */,
 				12F929C81D360FE500F21E9B /* AAComponentKit */,
@@ -305,6 +316,14 @@
 				12C38DE71D2F256A00D26266 /* Info.plist */,
 			);
 			path = AAKitDemoUITests;
+			sourceTree = "<group>";
+		};
+		12D643881D3652D3000E75DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				12D6438E1D3652D3000E75DA /* libRNControllerBridge.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		12F929BE1D360FB700F21E9B /* RNExt */ = {
@@ -555,6 +574,10 @@
 					ProductGroup = 12F92AA61D36101B00F21E9B /* Products */;
 					ProjectRef = 12F92AA51D36101B00F21E9B /* ReactNativeTestModule.xcodeproj */;
 				},
+				{
+					ProductGroup = 12D643881D3652D3000E75DA /* Products */;
+					ProjectRef = 12D643871D3652D3000E75DA /* RNControllerBridge.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -571,6 +594,13 @@
 			fileType = archive.ar;
 			path = libReactNativeControllers.a;
 			remoteRef = 125F66DF1D33D2EC002035A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		12D6438E1D3652D3000E75DA /* libRNControllerBridge.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNControllerBridge.a;
+			remoteRef = 12D6438D1D3652D3000E75DA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		12F92AAA1D36101B00F21E9B /* libReactNativeTestModule.a */ = {
@@ -860,6 +890,7 @@
 					"\"${PODS_ROOT}/Headers/Public/PINRemoteImage\"",
 					"\"${PODS_ROOT}/Headers/Public/React\"",
 					"$(SRCROOT)/../node_modules/react-native-controllers/ios",
+					"$(SRCROOT)/../node_modules/react-native-controller-bridge/ios/**",
 				);
 				INFOPLIST_FILE = AAKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -902,6 +933,7 @@
 					"\"${PODS_ROOT}/Headers/Public/PINRemoteImage\"",
 					"\"${PODS_ROOT}/Headers/Public/React\"",
 					"$(SRCROOT)/../node_modules/react-native-controllers/ios",
+					"$(SRCROOT)/../node_modules/react-native-controller-bridge/ios/**",
 				);
 				INFOPLIST_FILE = AAKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
