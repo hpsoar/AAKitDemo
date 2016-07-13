@@ -34,8 +34,6 @@
 		12F6125F1D30EF370081D6E9 /* DoctorListVC5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6125E1D30EF370081D6E9 /* DoctorListVC5.swift */; };
 		12F612611D316B8E0081D6E9 /* ASDisplayNodeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F612601D316B8E0081D6E9 /* ASDisplayNodeExt.swift */; };
 		12F929C51D360FB700F21E9B /* RNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F929C01D360FB700F21E9B /* RNBridgeManager.m */; };
-		12F929C61D360FB700F21E9B /* RNNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F929C21D360FB700F21E9B /* RNNavigator.m */; };
-		12F929C71D360FB700F21E9B /* RNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F929C41D360FB700F21E9B /* RNViewController.m */; };
 		12F92A521D360FE600F21E9B /* AAComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12F929E21D360FE500F21E9B /* AAComponent.mm */; };
 		12F92A531D360FE600F21E9B /* AAComponentExt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12F929E41D360FE500F21E9B /* AAComponentExt.mm */; };
 		12F92A541D360FE600F21E9B /* AALabelComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12F929E61D360FE600F21E9B /* AALabelComponent.mm */; };
@@ -138,10 +136,6 @@
 		12F612601D316B8E0081D6E9 /* ASDisplayNodeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASDisplayNodeExt.swift; sourceTree = "<group>"; };
 		12F929BF1D360FB700F21E9B /* RNBridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBridgeManager.h; sourceTree = "<group>"; };
 		12F929C01D360FB700F21E9B /* RNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBridgeManager.m; sourceTree = "<group>"; };
-		12F929C11D360FB700F21E9B /* RNNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNavigator.h; sourceTree = "<group>"; };
-		12F929C21D360FB700F21E9B /* RNNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNavigator.m; sourceTree = "<group>"; };
-		12F929C31D360FB700F21E9B /* RNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNViewController.h; sourceTree = "<group>"; };
-		12F929C41D360FB700F21E9B /* RNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNViewController.m; sourceTree = "<group>"; };
 		12F929E11D360FE500F21E9B /* AAComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponent.h; sourceTree = "<group>"; };
 		12F929E21D360FE500F21E9B /* AAComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAComponent.mm; sourceTree = "<group>"; };
 		12F929E31D360FE500F21E9B /* AAComponentExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAComponentExt.h; sourceTree = "<group>"; };
@@ -318,10 +312,6 @@
 			children = (
 				12F929BF1D360FB700F21E9B /* RNBridgeManager.h */,
 				12F929C01D360FB700F21E9B /* RNBridgeManager.m */,
-				12F929C11D360FB700F21E9B /* RNNavigator.h */,
-				12F929C21D360FB700F21E9B /* RNNavigator.m */,
-				12F929C31D360FB700F21E9B /* RNViewController.h */,
-				12F929C41D360FB700F21E9B /* RNViewController.m */,
 			);
 			name = RNExt;
 			path = ../RNExt;
@@ -696,13 +686,11 @@
 				12F92A801D360FE600F21E9B /* AAModelRefresher.m in Sources */,
 				12F92A6D1D360FE600F21E9B /* UIView_Block.swift in Sources */,
 				12C38DC61D2F256900D26266 /* AppDelegate.swift in Sources */,
-				12F929C71D360FB700F21E9B /* RNViewController.m in Sources */,
 				12F929C51D360FB700F21E9B /* RNBridgeManager.m in Sources */,
 				12F92A571D360FE600F21E9B /* CKComponent+HostingView.mm in Sources */,
 				12F6125D1D30D8AD0081D6E9 /* ASTableVC.swift in Sources */,
 				12F92A591D360FE600F21E9B /* CKTableViewUpdater.mm in Sources */,
 				12F6125F1D30EF370081D6E9 /* DoctorListVC5.swift in Sources */,
-				12F929C61D360FB700F21E9B /* RNNavigator.m in Sources */,
 				12C38E121D2F281300D26266 /* DoctorListVC4.swift in Sources */,
 				12C38E111D2F281300D26266 /* DoctorListVC3.m in Sources */,
 				12C38E0D1D2F281300D26266 /* DoctorInfoComponent.mm in Sources */,
