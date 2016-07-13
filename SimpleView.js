@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, NativeModules } from 'react-native';
 
-var RNNavigator = NativeModules.RNNavigator;
+var RNBridge = require('react-native-controller-bridge');
 
 var data = [
     '嘀嗒',
@@ -30,13 +30,18 @@ var data = [
 ]
 
 class SimpleView extends Component {
+  constructor(props) {
+    super(props);
+    this.controller = RNBridge.Controller(props.rn_controllerId);
+  }
+
   _onPressButton() {
-    RNNavigator.present({
+    this.controller.present({
       title: 'me, me...',      
-      component: 'TestModule',
-//      component: 'PassingData',
+//      component: 'TestModule',
+      component: 'PassingData',
       passProps: { data: data },
-    }, true, function() {}, function() {});
+    }, true);
   }
   render() {
     return (
@@ -45,7 +50,7 @@ class SimpleView extends Component {
         <Text style={styles.bigblue}>just bigblue</Text>
         <Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
         <Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
-        <TouchableHighlight onPress={this._onPressButton}>
+        <TouchableHighlight onPress={this._onPressButton.bind(this)}>
              <Text style={styles.bigblue}>RNNavigator.present</Text>
         </TouchableHighlight>
       </View>

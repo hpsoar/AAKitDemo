@@ -3,28 +3,32 @@
 var React = require('react');
 import { StyleSheet, Text, View, TouchableHighlight, NativeModules, NavigatorIOS } from 'react-native';
 
-var RNNavigator = NativeModules.RNNavigator;
+var RNBridge = require('react-native-controller-bridge');
 
 var SimpleList = require('./SimpleList');
 
 class PassingData extends React.Component {
+  constructor(props) {
+
+    super(props);
+    this.state = {subscription: false};
+    this.controller = RNBridge.Controller(props.rn_controllerId);
+  }
     _handleButton() {
-      console.log(RNNavigator);
-      console.log(RNNavigator.dismissController);
-      RNNavigator.dismiss(true, function() {
+      this.controller.dismiss(true, function() {
         console.log("hello");
       });
     }
 
     _next() {
-      RNNavigator.push({
+      self.controller.push({
         title: 'hello',
         component: 'ModalWithNavigator',
         style: {
           hideNavigationBar: true,
           hideNavigationBarAnimated: false,
         }
-      }, true, function() { });
+      }, true);
     }
 
     _handleRowPress() {

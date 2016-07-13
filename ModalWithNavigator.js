@@ -8,7 +8,8 @@ import { NativeAppEventEmitter } from 'react-native';
 
 var SimpleList = require('./SimpleList');
 var SimpleView = require('./SimpleView');
-var RNNavigator = NativeModules.RNNavigator;
+
+var RNBridge = require('react-native-controller-bridge');
 
 var data = [
     'react-native push',
@@ -17,13 +18,13 @@ var data = [
 ]
 
 console.log('hi');
-console.log(RNNavigator);
 
 class ModalWithNavigator extends React.Component{
   constructor(props) {
 
     super(props);
     this.state = {subscription: false};
+    this.controller = RNBridge.Controller(props.rn_controllerId);
   }
   componentDidMount() {
     console.log('mount');
@@ -41,14 +42,11 @@ class ModalWithNavigator extends React.Component{
 
     _handleButton() {
       console.log('hi');
-      console.log(RNNavigator);
-      RNNavigator.pop(true, function() {
-        console.log("hello");
-      });
+      this.controller.pop(true);
     }
 
     _next() {
-      RNNavigator.push({
+      this.controller.push({
         title: 'hello',
         component: 'ModalWithNavigator',
         test: function(o) {
@@ -59,7 +57,7 @@ class ModalWithNavigator extends React.Component{
           hideNavigationBar: true,
           hideNavigationBarAnimated: false,
         }
-      }, true, function() { });
+      }, true);
     }
 
     _handleRowPress() {
