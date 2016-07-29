@@ -46,6 +46,8 @@ class DoctorListVC6: NITableVC {
             
             refreshController.enableFooterRefresh()
         }
+
+
     }
     
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {

@@ -34,6 +34,7 @@
     [self.view addSubview:[self btnWithTitle:@"as tableview" sel:@selector(asTableViewDemo:)]];
     [self.view addSubview:[self btnWithTitle:@"custom as node" sel:@selector(customASNode:)]];
     [self.view addSubview:[self btnWithTitle:@"RN demo" sel:@selector(RNDemo:)]];
+    [self.view addSubview:[self btnWithTitle:@"Stevia Demo" sel:@selector(steviaDemo:)]];
 }
 
 - (UIButton *)btnWithTitle:(NSString *)title sel:(SEL)sel {
@@ -84,6 +85,11 @@
 
 - (void)customASNode:(id)sender {
     DoctorListVC6 *vc = [DoctorListVC6 new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)steviaDemo:(id)sender {
+    SteviaDemoVC *vc = [SteviaDemoVC new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
